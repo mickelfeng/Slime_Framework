@@ -15,6 +15,7 @@ class Bootstrap
 
     public function cgiRun()
     {
+        \SF\System\Config::load('main');
         $request = new \SF\System\Http\Request();
         $route   = new \SF\System\Framework\Route($request);
         list($class_name, $main_func) = $route->mainLogic();
