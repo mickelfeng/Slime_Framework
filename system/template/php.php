@@ -1,7 +1,7 @@
 <?php
-namespace SF\System;
+namespace SF\System\Template;
 
-class View
+class PHP
 {
     public static function initialize()
     {

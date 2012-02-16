@@ -11,12 +11,4 @@ spl_autoload_register(
     }
 );
 
-$bootstrap = new \System\Framework\Bootstrap();
-if (substr(php_sapi_name(), 0, 3) == 'cgi')
-{
-    $bootstrap->cgiRun();
-}
-else
-{
-    $bootstrap->cliRun();
-}
+new \SF\System\Run();

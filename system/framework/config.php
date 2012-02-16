@@ -1,5 +1,5 @@
 <?php
-namespace SF\System;
+namespace SF\System\Framework;
 
 class Config
 {
