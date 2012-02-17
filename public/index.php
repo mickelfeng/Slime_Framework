@@ -1,4 +1,6 @@
 <?php
+use \SF\System\Framework\Bootstrap as Bootstrap;
+
 define('ROOT', dirname(dirname(__FILE__)));
 spl_autoload_register(
     function($name)
@@ -11,12 +13,4 @@ spl_autoload_register(
     }
 );
 
-$bootstrap = new \System\Framework\Bootstrap();
-if (substr(php_sapi_name(), 0, 3) == 'cgi')
-{
-    $bootstrap->cgiRun();
-}
-else
-{
-    $bootstrap->cliRun();
-}
+Bootstrap::instance();

@@ -1,13 +1,13 @@
 <?php
-namespace SF\System;
+namespace SF\System\Framework;
 
 class Config
 {
     protected static $_configs = null;
 
-    public static function load($config)
+    public static function load($file)
     {
-
+        // $_configs[$file] =
     }
 
     public static function get($key)

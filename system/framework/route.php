@@ -3,8 +3,6 @@ namespace SF\System\Framework;
 
 class Route
 {
-    private $request;
-
     public function __construct($request)
     {
         if ($request instanceof \SF\System\Http\Request)
@@ -28,6 +26,11 @@ class Route
     }
 
     public function pathSegment($index)
+    {
+        ;
+    }
+
+    public function autoRoute()
     {
         ;
     }
