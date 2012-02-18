@@ -7,4 +7,9 @@ class Response
     {
         ;
     }
+
+    public static function send()
+    {
+        ;
+    }
 }

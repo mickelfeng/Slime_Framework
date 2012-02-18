@@ -1,4 +1,7 @@
 <?php
 return array(
-    'blog.localhost' => 'blog',
+    'blog.localhost' => array(
+        'env' => 'debug',
+        'app' => 'blog',
+    ),
 );
