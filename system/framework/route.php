@@ -3,35 +3,44 @@ namespace SF\System\Framework;
 
 class Route
 {
-    public function __construct($request)
+    protected  $_request;
+
+    protected $_result;
+
+    public function __construct(\SF\System\Http\Request $request)
     {
-        if ($request instanceof \SF\System\Http\Request)
-        {
-            ;
-        }
-        elseif ($request instanceof \SF\System\Cli\Request)
-        {
-            ;
-        }
-        else
-        {
-            throw new \Exception();
-        }
-        $this->request = $request;
+        Config::load('main');
+        $this->_request = $request;
     }
 
-    public function mainLogic()
+    public function parseRequest()
+    {
+        if (!$this->_result)
+        {
+            $app = Config::get('main.' . $this->_request->host);
+            Config::load($app['app'] . '.main');
+            $this->_result = '';
+        }
+        return $this->_result;
+    }
+
+    public function getRequest()
+    {
+        return $this->_request;
+    }
+
+    public function segment($number)
     {
         ;
     }
 
-    public function pathSegment($index)
+    public function segment_number()
     {
         ;
     }
 
-    public function autoRoute()
+    public function method()
     {
-        ;
+
     }
 }

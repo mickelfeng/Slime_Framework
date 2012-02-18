@@ -10,6 +10,11 @@ class Config
         // $_configs[$file] =
     }
 
+    /**
+     * @static
+     * @param $key
+     * @return mixed
+     */
     public static function get($key)
     {
 

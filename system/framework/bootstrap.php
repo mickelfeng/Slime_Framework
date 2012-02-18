@@ -37,6 +37,7 @@ class Bootstrap
     {
         $this->start_microtime = microtime(true);
         Config::load('main');
+
         if (substr(php_sapi_name(), 0, 3) == 'cgi')
         {
             $this->cgiRun();
