@@ -1,10 +1,11 @@
 <?php
 namespace SF\Blog\Logic;
 
-class Show
+use \SF\System as Sys;
+
+class Show extends Sys\App\Controller
 {
-    public static function main()
+    public static function get()
     {
-        //$mysql = \SF\System\Database\Mysql::load();
     }
 }

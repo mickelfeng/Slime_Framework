@@ -1,4 +1,4 @@
 <?php
 return array(
-    'route' => include('route.conf.php'),
+    'module' => array('I18n', 'SDO', 'Template::Php'),
 );

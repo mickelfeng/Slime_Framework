@@ -1,5 +1,5 @@
 <?php
-use \SF\System\Framework\Bootstrap as Bootstrap;
+use \SF\System\Bootstrap as Bootstrap;
 
 define('ROOT', dirname(dirname(__FILE__)));
 spl_autoload_register(
@@ -13,4 +13,4 @@ spl_autoload_register(
     }
 );
 
-Bootstrap::instance();
+new Bootstrap();

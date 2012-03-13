@@ -33,4 +33,9 @@ class Request
     {
         ;
     }
+
+    public function getAllLang()
+    {
+        ;
+    }
 }

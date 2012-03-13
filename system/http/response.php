@@ -8,7 +8,17 @@ class Response
         ;
     }
 
-    public static function send()
+    public function send()
+    {
+        ;
+    }
+
+    public function setHeader()
+    {
+        ;
+    }
+
+    public function setBody($body)
     {
         ;
     }
