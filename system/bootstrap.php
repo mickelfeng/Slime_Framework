@@ -3,22 +3,9 @@ namespace SF\System;
 
 class Bootstrap
 {
-    protected static $_instance;
-
     public $start_microtime;
 
     public $end_microtime;
-
-    public $env;
-
-    public $request;
-
-    /**
-     * @var Route
-     */
-    public $route;
-
-    public $response;
 
     public function __construct()
     {
