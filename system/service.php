@@ -5,7 +5,7 @@ class Service
 {
     private static $_services = array();
 
-    public static function register($service_name, $service)
+    public static function register($service_name, I_Module $service)
     {
         if (isset(self::$_services[$service_name]))
         {

@@ -1,11 +1,16 @@
 <?php
 namespace SF\System;
 
-class Config
+class Config implements I_Module
 {
     protected $_configs = null;
 
-    public function load($file)
+    public static function createInstance(array $config)
+    {
+        return new self();
+    }
+
+    public function load($file, $namespace)
     {
         // $_configs[$file] =
     }

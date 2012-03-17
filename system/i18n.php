@@ -1,13 +1,18 @@
 <?php
 namespace SF\System;
 
-class I18n
+class I18n implements I_Module
 {
     private $_lang;
     private $_path;
     private $_expr = '%l.lang';
 
     protected $_storage = array();
+
+    public static function createInstance(array $config)
+    {
+        return new self($config[0]);
+    }
 
     public function __construct($_lang)
     {

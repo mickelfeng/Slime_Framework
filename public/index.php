@@ -1,7 +1,10 @@
 <?php
 use \SF\System\Bootstrap as Bootstrap;
 
-define('ROOT', dirname(dirname(__FILE__)));
+define('DIR_ROOT', dirname(dirname(__FILE__)));
+define('DIR_SYS', DIR_ROOT . DIRECTORY_SEPARATOR . 'system');
+define('DIR_APP', DIR_ROOT . DIRECTORY_SEPARATOR . 'applacation');
+
 spl_autoload_register(
     function($name)
     {

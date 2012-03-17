@@ -1,11 +1,16 @@
 <?php
 namespace SF\System;
 
-class Bootstrap
+class Bootstrap implements I_Module
 {
     public $start_microtime;
 
     public $end_microtime;
+
+    public static function createInstance(array $config)
+    {
+        return new self();
+    }
 
     public function __construct()
     {
@@ -14,7 +19,6 @@ class Bootstrap
         Service::register('bootstrap', $this);
 
         Service::register('config', new Config());
-        Service::getConfig()->load('main');
 
         if (substr(php_sapi_name(), 0, 3) == 'cgi')
         {
