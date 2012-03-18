@@ -68,8 +68,9 @@ class Route implements  I_Module
     /**
      * @return mixed
      */
-    public function renderToApp()
+    public function toApp()
     {
+        // load modules
         Service::getConfig()->load(DIR_APP . 'app.conf.php', 'app');
         $map = Service::getConfig()->get('app');
         if (!isset($map[Service::getRequest()->host]))
@@ -91,10 +92,12 @@ class Route implements  I_Module
                 Service::register($k, call_user_func(array($name, 'createInstance'), $v));
             }
         }
-        return call_user_func('\\SF\\' . $this->_app . '\\Init', 'main', $this);
+
+        // call app
+        $data = call_user_func('\\SF\\' . $this->_app . '\\Init', 'main', $this);
     }
 
-    public function autoRoute()
+    public function appExecute()
     {
     }
 }

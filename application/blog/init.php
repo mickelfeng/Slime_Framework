@@ -6,6 +6,6 @@ class Init
 {
     public static function main(Sys\Route $route)
     {
-        return $route->autoRoute();
+        return $route->appExecute();
     }
 }

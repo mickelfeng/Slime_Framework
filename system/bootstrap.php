@@ -41,7 +41,7 @@ class Bootstrap implements I_Module
         Service::register('route', new Route(Service::get('request')));
         Service::register('response', new Http\Response());
 
-        Service::getResponse()->setBody(Service::getRoute()->renderToApp());
+        Service::getResponse()->setBody(Service::getRoute()->toApp());
 
         Service::getResponse()->send();
     }
