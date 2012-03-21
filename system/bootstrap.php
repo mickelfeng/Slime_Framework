@@ -1,7 +1,7 @@
 <?php
 namespace SF\System;
 
-class Bootstrap implements I_Module
+class Bootstrap implements I_Service
 {
     public $start_microtime;
 

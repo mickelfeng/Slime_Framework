@@ -1,7 +1,7 @@
 <?php
 namespace SF\System;
 
-class Route implements  I_Module
+class Route implements  I_Service
 {
     protected $_app;
 

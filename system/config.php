@@ -1,7 +1,7 @@
 <?php
 namespace SF\System;
 
-class Config implements I_Module
+class Config implements I_Service
 {
     protected $_configs = null;
 

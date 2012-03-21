@@ -1,7 +1,7 @@
 <?php
 namespace SF\System;
 
-class I18n implements I_Module
+class I18n implements I_Service
 {
     private $_lang;
     private $_path;

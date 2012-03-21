@@ -1,7 +1,7 @@
 <?php
 namespace SF\System;
 
-interface I_Module
+interface I_Service
 {
     public static function createInstance(array $config);
 }
