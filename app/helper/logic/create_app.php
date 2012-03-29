@@ -1,14 +1,11 @@
 <?php
-namespace SF\Helper\Logic;
+namespace App\Helper\Logic;
 
-use \SF\System as Sys;
-
-class Create_APP extends Sys\App\CLI_Controller
+class Create_APP extends \Sys\App\CLI_Controller
 {
     public function run()
     {
-        // get current apps
-        $route = Sys\Route::createInstance(new Sys\Cli\Input('')); //@todo
+        $route = \Sys\Service::getRoute()->makeOtherRoute('show_apps');
         $data = $route->appExecute();
 
         $appName = $this->_params['app'];
@@ -51,12 +48,11 @@ class Create_APP extends Sys\App\CLI_Controller
     {
         $str = <<<INIT
 <?php
-namespace SF\{$appName};
-use \SF\System as Sys;
+namespace \App\{$appName};
 
 class Init
 {
-    public static function main(Sys\Route \$route)
+    public static function main(\Sys\Route \$route)
     {
         return \$route->appExecute();
     }

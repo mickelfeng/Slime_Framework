@@ -1,5 +1,5 @@
 <?php
-namespace SF\Helper;
+namespace App\Helper;
 
 class Create_App
 {
