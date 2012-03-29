@@ -1,9 +1,7 @@
 <?php
-namespace SF\Blog\Logic;
+namespace App\Blog\Logic;
 
-use \SF\System as Sys;
-
-class Show extends Sys\App\CGI_Controller
+class Show extends \Sys\App\CGI_Controller
 {
     public function get()
     {
