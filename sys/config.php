@@ -1,5 +1,5 @@
 <?php
-namespace SF\System;
+namespace Sys;
 
 class Config implements I_Service
 {
@@ -12,7 +12,8 @@ class Config implements I_Service
 
     public function load($file, $namespace)
     {
-        // $_configs[$file] =
+        $this->_configs[$namespace] = require $file;
+        return true;
     }
 
     /**
@@ -22,7 +23,7 @@ class Config implements I_Service
      */
     public function get($key)
     {
-
+        return $this->_configs[$key];
     }
 
     public function set($key, $value)

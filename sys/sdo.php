@@ -1,5 +1,5 @@
 <?php
-namespace SF\System;
+namespace Sys;
 
 class SDO implements I_Service
 {

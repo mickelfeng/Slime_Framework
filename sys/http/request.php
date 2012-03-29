@@ -1,7 +1,7 @@
 <?php
-namespace SF\System\Http;
+namespace Sys\Http;
 
-class Request
+class Request implements \Sys\I_Service
 {
     public $method;
     public $path;
@@ -21,6 +21,12 @@ class Request
     public $user_agent;
 
     public $custom;
+
+
+    public static function createInstance(array $config)
+    {
+        return new self();
+    }
 
     public function __construct()
     {

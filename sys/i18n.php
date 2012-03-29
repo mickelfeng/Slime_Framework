@@ -1,5 +1,5 @@
 <?php
-namespace SF\System;
+namespace Sys;
 
 class I18n implements I_Service
 {
@@ -16,8 +16,8 @@ class I18n implements I_Service
 
     public function __construct($_lang)
     {
-        $this->loadLangPacket($_lang);
-        $this->setDefaultLang($_lang);
+        #$this->loadLangPacket($_lang);
+        #$this->setDefaultLang($_lang);
     }
 
     public function setLangDir($path)

@@ -1,5 +1,5 @@
 <?php
-namespace SF\System;
+namespace Sys;
 
 interface I_Service
 {

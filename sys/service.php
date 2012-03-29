@@ -1,5 +1,5 @@
 <?php
-namespace SF\System;
+namespace Sys;
 
 class Service
 {
@@ -64,5 +64,14 @@ class Service
     public static function getConfig()
     {
         return self::$_services['config'];
+    }
+
+    /**
+     * @static
+     * @return Cli\Input
+     */
+    public static function getInput()
+    {
+        return self::$_services['input'];
     }
 }

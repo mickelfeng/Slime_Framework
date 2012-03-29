@@ -1,6 +1,14 @@
 <?php
-namespace SF\System\Cli;
+namespace Sys\Cli;
 
-class Input
+class Input implements \Sys\I_Service
 {
+    public static function createInstance(array $config)
+    {
+        return new self();
+    }
+
+    public function __construct()
+    {
+    }
 }

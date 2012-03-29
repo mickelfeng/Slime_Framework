@@ -1,5 +1,5 @@
 <?php
-namespace SF\System\App;
+namespace Sys\App;
 
 abstract class CGI_Controller
 {
@@ -37,7 +37,7 @@ abstract class CGI_Controller
 
     protected function stick(array $apps)
     {
-        if (isset($apps[\SF\System\Service::getRoute()->getApp()]))
+        if (isset($apps[\Sys\Service::getRoute()->getApp()]))
         {
             $this->__destruct(false);
         }

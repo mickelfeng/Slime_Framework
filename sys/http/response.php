@@ -1,8 +1,13 @@
 <?php
-namespace SF\System\Http;
+namespace Sys\Http;
 
-class Response
+class Response implements \Sys\I_Service
 {
+    public static function createInstance(array $config)
+    {
+        return new self();
+    }
+
     public function __construct()
     {
         ;

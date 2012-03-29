@@ -1,5 +1,5 @@
 <?php
-namespace SF\System;
+namespace Sys;
 
 class Bootstrap implements I_Service
 {
@@ -22,17 +22,23 @@ class Bootstrap implements I_Service
 
         if (substr(php_sapi_name(), 0, 3) == 'cgi')
         {
+            define('RUN_MODE','cgi');
             $this->cgiRun();
         }
         else
         {
+            define('RUN_MODE','cli');
             $this->cliRun();
         }
     }
 
     public function cliRun()
     {
-        ;
+        Service::register('input', new Cli\Input());
+        Service::register('output', new Cli\Output());
+        Service::register('route', new Route(Service::getInput()));
+
+        Service::getRoute()->toApp();
     }
 
     public function cgiRun()
