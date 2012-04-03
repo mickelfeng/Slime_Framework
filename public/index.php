@@ -1,5 +1,5 @@
 <?php
-use \SF\System\Bootstrap as Bootstrap;
+use Sys\Bootstrap as Bootstrap;
 
 define('DIR_ROOT', dirname(dirname(__FILE__)));
 define('DIR_SYS', DIR_ROOT . DIRECTORY_SEPARATOR . 'system');
