@@ -85,11 +85,6 @@ class Route implements I_Service
         return $this->_logic;
     }
 
-    public function getMethod()
-    {
-        return $this->_method;
-    }
-
     public function getParams()
     {
         return $this->_params;
@@ -129,5 +124,14 @@ class Route implements I_Service
         {
 
         }
+    }
+
+    public function makeOtherRoute($logic = null, $method = null, $params = null)
+    {
+        $inst = clone $this;
+        if ($logic !== null) $inst->_logic = $logic;
+        if ($method !== null) $inst->_method = $method;
+        if ($params !== null) $inst->_params = $params;
+        return $inst;
     }
 }
