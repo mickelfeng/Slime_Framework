@@ -5,7 +5,7 @@ class Context
 {
     private static $_services = array();
 
-    public static function register($service_name, I_Service $service)
+    public static function register($service_name, I_Context $service)
     {
         if (isset(self::$_services[$service_name]))
         {

@@ -1,7 +1,7 @@
 <?php
 namespace Sys;
 
-class SDO implements I_Service
+class SDO implements I_Context
 {
 
     public static function createInstance(array $config)

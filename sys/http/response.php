@@ -1,7 +1,7 @@
 <?php
 namespace Sys\Http;
 
-class Response implements \Sys\I_Service
+class Response implements \Sys\I_Context
 {
     public static function createInstance(array $config)
     {

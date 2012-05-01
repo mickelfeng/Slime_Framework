@@ -1,7 +1,7 @@
 <?php
 namespace Sys\Http;
 
-class Request implements \Sys\I_Service
+class Request implements \Sys\I_Context
 {
     public $method;
     public $path;

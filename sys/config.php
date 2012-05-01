@@ -1,7 +1,7 @@
 <?php
 namespace Sys;
 
-class Config implements I_Service
+class Config implements I_Context
 {
     protected $_configs = null;
 

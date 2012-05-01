@@ -1,7 +1,7 @@
 <?php
 namespace Sys;
 
-class I18n implements I_Service
+class I18n implements I_Context
 {
     private $_lang;
     private $_path;

@@ -1,7 +1,7 @@
 <?php
 namespace Sys;
 
-class Route implements I_Service
+class Route implements I_Context
 {
     protected $_app;
 

@@ -1,7 +1,7 @@
 <?php
 namespace Sys;
 
-class Bootstrap implements I_Service
+class Bootstrap implements I_Context
 {
     public $start_microtime;
 
@@ -35,8 +35,8 @@ class Bootstrap implements I_Service
     public function cliRun()
     {
         Context::register('input', new Cli\Input());
-        Context::register('output', new Cli\Output());
-        //Context::register('route', new Route(Context::getInput()));
+        //Context::register('output', new Cli\Output());
+        Context::register('route', new Route(Context::getInput()));
 
         Context::getRoute()->toApp();
     }
