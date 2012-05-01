@@ -16,9 +16,9 @@ class Bootstrap implements I_Service
     {
         $this->start_microtime = microtime(true);
 
-        Service::register('bootstrap', $this);
+        Context::register('bootstrap', $this);
 
-        Service::register('config', new Config());
+        Context::register('config', new Config());
 
         if (substr(php_sapi_name(), 0, 3) == 'cgi')
         {
@@ -34,22 +34,22 @@ class Bootstrap implements I_Service
 
     public function cliRun()
     {
-        Service::register('input', new Cli\Input());
-        Service::register('output', new Cli\Output());
-        Service::register('route', new Route(Service::getInput()));
+        Context::register('input', new Cli\Input());
+        Context::register('output', new Cli\Output());
+        //Context::register('route', new Route(Context::getInput()));
 
-        Service::getRoute()->toApp();
+        Context::getRoute()->toApp();
     }
 
     public function cgiRun()
     {
-        Service::register('request', new Http\Request());
-        Service::register('route', new Route(Service::get('request')));
-        Service::register('response', new Http\Response());
+        Context::register('request', new Http\Request());
+        Context::register('route', new Route(Context::get('request')));
+        Context::register('response', new Http\Response());
 
-        Service::getResponse()->setBody(Service::getRoute()->toApp());
+        Context::getResponse()->setBody(Context::getRoute()->toApp());
 
-        Service::getResponse()->send();
+        Context::getResponse()->send();
     }
 
     public function __destruct()

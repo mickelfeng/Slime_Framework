@@ -5,7 +5,7 @@ class Create_APP extends \Sys\App\CLI_Controller
 {
     public function run()
     {
-        $route = \Sys\Service::getRoute()->makeOtherRoute('show_apps');
+        $route = \Sys\Context::getRoute()->makeOtherRoute('show_apps');
         $data = $route->appExecute();
 
         $appName = $this->_params['app'];

@@ -37,7 +37,7 @@ abstract class CGI_Controller
 
     protected function stick(array $apps)
     {
-        if (isset($apps[\Sys\Service::getRoute()->getApp()]))
+        if (isset($apps[\Sys\Context::getRoute()->getApp()]))
         {
             $this->__destruct(false);
         }

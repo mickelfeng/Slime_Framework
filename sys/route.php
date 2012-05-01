@@ -30,22 +30,22 @@ class Route implements I_Service
         {
             new \InvalidArgumentException();
         }
-        Service::getConfig()->load(DIR_APP . DIRECTORY_SEPARATOR . 'app.conf.php', 'app');
+        Context::getConfig()->load(DIR_APP . DIRECTORY_SEPARATOR . 'app.conf.php', 'app');
     }
 
     public function parseRequest()
     {
-        if (!isset($map[Service::getRequest()->host]))
+        if (!isset($map[Context::getRequest()->host]))
         {
             throw new \Exception('APP not found!');
         }
-        $this->_app = $map[Service::getRequest()->host];
+        $this->_app = $map[Context::getRequest()->host];
     }
 
     public function parseInput()
     {
-        $map = Service::getConfig()->get('app');
-        $this->_app = Service::getInput()->arg0;
+        $map = Context::getConfig()->get('app');
+        $this->_app = Context::getInput()->arg0;
         if (strstr($this->_app, '='))
         {
             list(,$this->_app) = explode('=', $this->_app);
@@ -56,10 +56,10 @@ class Route implements I_Service
             throw new \Exception('APP not found!');
         }
 
-        if (!empty(Service::getInput()->args))
+        if (!empty(Context::getInput()->args))
         {
             $i = 0;
-            foreach (Service::getInput()->args as $arg)
+            foreach (Context::getInput()->args as $arg)
             {
                 if (strstr($arg, '='))
                 {
@@ -96,17 +96,17 @@ class Route implements I_Service
     public function toApp()
     {
         // load modules
-        Service::getConfig()->load(
+        Context::getConfig()->load(
             DIR_APP . DIRECTORY_SEPARATOR . $this->_app . DIRECTORY_SEPARATOR . 'main.conf.php',
             $this->_app
         );
-        $conf = Service::getConfig()->get($this->_app);
+        $conf = Context::getConfig()->get($this->_app);
         if (!empty($conf['module']))
         {
             foreach ($conf['module'] as $k => $v)
             {
                 $name = array_shift($v);
-                Service::register($k, call_user_func(array($name, 'createInstance'), $v));
+                Context::register($k, call_user_func(array($name, 'createInstance'), $v));
             }
         }
 

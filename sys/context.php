@@ -1,7 +1,7 @@
 <?php
 namespace Sys;
 
-class Service
+class Context
 {
     private static $_services = array();
 
@@ -9,13 +9,13 @@ class Service
     {
         if (isset(self::$_services[$service_name]))
         {
-            throw new \Exception(sprintf('Serice [%s] has been registered!', $service_name));
+            throw new \Exception(sprintf('Service [%s] has been registered!', $service_name));
         }
         self::$_services[$service_name] = $service;
         return true;
     }
 
-    public static function unregister($service_name)
+    public static function unRegister($service_name)
     {
         unset(self::$_services[$service_name]);
         return true;
@@ -25,7 +25,7 @@ class Service
     {
         if (!isset(self::$_services[$service_name]))
         {
-            throw new \Exception(sprintf('Serice [%s] has not been registered before!', $service_name));
+            throw new \Exception(sprintf('Service [%s] has not been registered before!', $service_name));
         }
         return self::$_services[$service_name];
     }
