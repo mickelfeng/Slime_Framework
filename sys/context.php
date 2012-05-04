@@ -3,75 +3,95 @@ namespace Sys;
 
 class Context
 {
-    private static $_services = array();
+    /**
+     * @var Context[]
+     */
+    private static $instances = array();
+    public static $context = 'default';
 
-    public static function register($service_name, I_Context $service)
+    private $_services = array();
+
+    public function __construct()
     {
-        if (isset(self::$_services[$service_name]))
+        self::$instances[self::$context] = $this;
+    }
+
+    /**
+     * @static
+     * @return Context
+     */
+    public static function getInstance()
+    {
+        return self::$instances[self::$context];
+    }
+
+    public function register($service_name, I_Context $service)
+    {
+        if (isset($this->_services[$service_name]))
         {
             throw new \Exception(sprintf('Service [%s] has been registered!', $service_name));
         }
-        self::$_services[$service_name] = $service;
+        $this->_services[$service_name] = $service;
         return true;
     }
 
-    public static function unRegister($service_name)
+    public function unRegister($service_name)
     {
-        unset(self::$_services[$service_name]);
+        unset($this->_services[$service_name]);
         return true;
     }
 
-    public static function get($service_name)
+    public function get($service_name)
     {
-        if (!isset(self::$_services[$service_name]))
+        if (!isset($this->_services[$service_name]))
         {
             throw new \Exception(sprintf('Service [%s] has not been registered before!', $service_name));
         }
-        return self::$_services[$service_name];
+        return $this->_services[$service_name];
     }
 
     /**
      * @static
      * @return Http\Request
      */
-    public static function getRequest()
+    public function getRequest()
     {
-        return self::$_services['request'];
+        return $this->_services['request'];
     }
 
     /**
      * @static
      * @return Http\Response
      */
-    public static function getResponse()
+    public function getResponse()
     {
-        return self::$_services['response'];
+        return $this->_services['response'];
     }
 
     /**
      * @static
      * @return Route
      */
-    public static function getRoute()
+    public function getRoute()
     {
-        return self::$_services['route'];
+        return $this->_services['route'];
     }
 
     /**
      * @static
      * @return Config
      */
-    public static function getConfig()
+    public function getConfig()
     {
-        return self::$_services['config'];
+        return $this->_services['config'];
     }
 
     /**
      * @static
      * @return Cli\Input
      */
-    public static function getInput()
+    public function getInput()
     {
-        return self::$_services['input'];
+        return $this->_services['input'];
     }
 }

@@ -30,22 +30,22 @@ class Route implements I_Context
         {
             new \InvalidArgumentException();
         }
-        Context::getConfig()->load(DIR_APP . DIRECTORY_SEPARATOR . 'app.conf.php', 'app');
+        Context::getInstance()->getConfig()->load(DIR_APP . DIRECTORY_SEPARATOR . 'app.conf.php', 'app');
     }
 
     public function parseRequest()
     {
-        if (!isset($map[Context::getRequest()->host]))
+        if (!isset($map[Context::getInstance()->getRequest()->host]))
         {
             throw new \Exception('APP not found!');
         }
-        $this->_app = $map[Context::getRequest()->host];
+        $this->_app = $map[Context::getInstance()->getRequest()->host];
     }
 
     public function parseInput()
     {
-        $map = Context::getConfig()->get('app');
-        $this->_app = Context::getInput()->arg0;
+        $map = Context::getInstance()->getConfig()->get('app');
+        $this->_app = Context::getInstance()->getInput()->arg0;
         if (strstr($this->_app, '='))
         {
             list(,$this->_app) = explode('=', $this->_app);
@@ -56,10 +56,10 @@ class Route implements I_Context
             throw new \Exception('APP not found!');
         }
 
-        if (!empty(Context::getInput()->args))
+        if (!empty(Context::getInstance()->getInput()->args))
         {
             $i = 0;
-            foreach (Context::getInput()->args as $arg)
+            foreach (Context::getInstance()->getInput()->args as $arg)
             {
                 if (strstr($arg, '='))
                 {
@@ -96,17 +96,17 @@ class Route implements I_Context
     public function toApp()
     {
         // load modules
-        Context::getConfig()->load(
+        Context::getInstance()->getConfig()->load(
             DIR_APP . DIRECTORY_SEPARATOR . $this->_app . DIRECTORY_SEPARATOR . 'main.conf.php',
             $this->_app
         );
-        $conf = Context::getConfig()->get($this->_app);
+        $conf = Context::getInstance()->getConfig()->get($this->_app);
         if (!empty($conf['module']))
         {
             foreach ($conf['module'] as $k => $v)
             {
                 $name = array_shift($v);
-                Context::register($k, call_user_func(array($name, 'createInstance'), $v));
+                Context::getInstance()->register($k, call_user_func(array($name, 'createInstance'), $v));
             }
         }
 

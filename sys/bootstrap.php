@@ -1,24 +1,15 @@
 <?php
 namespace Sys;
 
-class Bootstrap implements I_Context
+class Bootstrap
 {
-    public $start_microtime;
-
-    public $end_microtime;
-
-    public static function createInstance(array $config)
+    public function __construct(\I_APP $app)
     {
-        return new self();
     }
 
-    public function __construct()
+    public function run()
     {
-        $this->start_microtime = microtime(true);
-
-        Context::register('bootstrap', $this);
-
-        Context::register('config', new Config());
+        Context::getInstance()->register('config', new Config());
 
         if (substr(php_sapi_name(), 0, 3) == 'cgi')
         {
@@ -32,24 +23,24 @@ class Bootstrap implements I_Context
         }
     }
 
-    public function cliRun()
+    private function cliRun()
     {
-        Context::register('input', new Cli\Input());
-        //Context::register('output', new Cli\Output());
-        Context::register('route', new Route(Context::getInput()));
+        Context::getInstance()->register('input', new Cli\Input());
+        //Context::getInstance()->register('output', new Cli\Output());
+        Context::getInstance()->register('route', new Route(Context::getInstance()->getInput()));
 
-        Context::getRoute()->toApp();
+        Context::getInstance()->getRoute()->toApp();
     }
 
-    public function cgiRun()
+    private function cgiRun()
     {
-        Context::register('request', new Http\Request());
-        Context::register('route', new Route(Context::get('request')));
-        Context::register('response', new Http\Response());
+        Context::getInstance()->register('request', new Http\Request());
+        Context::getInstance()->register('response', new Http\Response());
 
-        Context::getResponse()->setBody(Context::getRoute()->toApp());
+        Context::getInstance()->register('route', new Route(Context::getInstance()->getRequest()));
+        Context::getInstance()->getResponse()->setBody(Context::getInstance()->getRoute()->toApp());
 
-        Context::getResponse()->send();
+        Context::getInstance()->getResponse()->send();
     }
 
     public function __destruct()
