@@ -29,9 +29,7 @@ class Bootstrap
 
     private function runHttp()
     {
-        CTX::$httpRequest = Http\Request::createFromCurrentHttpRequest();
-        CTX::$httpResponse = new Http\Response();
-        CTX::$route = Route::FactoryFromHttpRequest(CTX::$app, CTX::$httpRequest);
+        CTX::$route = Route::FactoryFromHttpRequest(CTX::$config->get('route'), CTX::$app->getBLLDir());
 
         CTX::$event->callback(self::EVENT_PRE_APP);
         CTX::$route->render();

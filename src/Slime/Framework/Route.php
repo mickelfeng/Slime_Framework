@@ -3,35 +3,45 @@ namespace Slime\Framework;
 
 class Route
 {
-    private $file;
+    public $file;
 
-    private $callback;
+    public $callback;
 
-    private $params = array();
-
-    public function getCallback()
-    {
-        return $this->callback;
-    }
-
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    public function getParams()
-    {
-        return $this->params;
-    }
+    public $params = array();
 
     private function __construct()
     {
         ;
     }
 
-    public static function FactoryFromHttpRequest(I_APP $app, Http\Request $request)
+    public static function FactoryFromHttpRequest($rulesConfig, $bllDir)
     {
-        return new self();
+        $route = new self();
+
+        //@todo
+
+        return $route;
+    }
+
+    private static function parseCustomRules(Route $obj, $rulesMap, $bllDir)
+    {
+        $result = false;
+        foreach ($rulesMap as $ruleItem) {
+            switch ($ruleItem['type']) {
+                case 'WIELD':
+                    break;
+                case 'REG':
+                    break;
+                case 'CALLBACK':
+                    break;
+            }
+        }
+        return $result;
+    }
+
+    private static function parseAutomatic(Route $obj, $bllDir)
+    {
+        return true;
     }
 
     public static function FactoryFromCliInput(Cli\Input $input)
