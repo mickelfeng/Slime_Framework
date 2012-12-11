@@ -9,5 +9,9 @@ interface I_APP
 
     public function getI18nDir();
 
-    public function getBusinessLogicDir();
+    public function getBLLDir();
+
+    public function getDALDir();
+
+    public function getViewDir();
 }

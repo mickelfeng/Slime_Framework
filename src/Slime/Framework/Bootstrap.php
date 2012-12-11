@@ -19,15 +19,15 @@ class Bootstrap
     public function run()
     {
         CTX::$event->callback(self::EVENT_PRE_SYS);
-        substr(php_sapi_name(), 0, 3) == 'cgi' ? $this->runHTTP(): $this->runCLI();
+        substr(php_sapi_name(), 0, 3) == 'cgi' ? $this->runHttp(): $this->runCli();
         CTX::$event->callback(self::EVENT_POST_SYS);
     }
 
-    private function runCLI()
+    private function runCli()
     {
     }
 
-    private function runHTTP()
+    private function runHttp()
     {
         CTX::$httpRequest = Http\Request::createFromCurrentHttpRequest();
         CTX::$httpResponse = new Http\Response();
