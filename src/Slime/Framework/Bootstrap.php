@@ -12,14 +12,17 @@ class Bootstrap
     {
         CTX::$app = $app;
         CTX::$event = new Event();
-        CTX::$config = new Config();
+        CTX::$config = new Config($app->getConfigDir());
         CTX::$profiler = new Profiler();
     }
 
     public function run()
     {
+        CTX::$event->addMulti(CTX::$config->get('event'));
         CTX::$event->callback(self::EVENT_PRE_SYS);
-        substr(php_sapi_name(), 0, 3) == 'cgi' ? $this->runHttp(): $this->runCli();
+        substr(php_sapi_name(), 0, 3) == 'cgi' ?
+            $this->runHttp():
+            $this->runCli();
         CTX::$event->callback(self::EVENT_POST_SYS);
     }
 
@@ -29,8 +32,10 @@ class Bootstrap
 
     private function runHttp()
     {
-        CTX::$route = Route::FactoryFromHttpRequest(CTX::$config->get('route'), CTX::$app->getBLLDir());
-
+        CTX::$route = Route::FactoryFromHttpRequest(
+            CTX::$config->get('route'),
+            CTX::$app->getBLLDir()
+        );
         CTX::$event->callback(self::EVENT_PRE_APP);
         CTX::$route->render();
         CTX::$event->callback(self::EVENT_POST_APP);

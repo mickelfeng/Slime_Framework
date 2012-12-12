@@ -3,6 +3,15 @@ namespace Slime\Framework;
 
 class Route
 {
+    const MAP = 0;
+    const AUTO = 1;
+    const CUSTOM = 2;
+    const ATTEMPT_OTHER = 3;
+    const PRI = 4;
+
+    const CALLBACK = 0;
+    const ARGS = 1;
+
     public $file;
 
     public $callback;
@@ -23,16 +32,21 @@ class Route
         return $route;
     }
 
-    private static function parseCustomRules(Route $obj, $rulesMap, $bllDir)
+    private static function parseCustomRules(Route $obj, $requestUri, $rulesMap, $bllDir)
     {
         $result = false;
-        foreach ($rulesMap as $ruleItem) {
-            switch ($ruleItem['type']) {
-                case 'WIELD':
+        foreach ($rulesMap as $rule => $data) {
+            $ruleType = substr($rule, 0, 2);
+            $ruleDetail = substr($rule, 2);
+            switch ($ruleType) {
+                case 'R:':
+                    if (preg_match($rule, $requestUri, $match)) {
+                        preg
+                        $result = true;
+                        break;
+                    }
                     break;
-                case 'REG':
-                    break;
-                case 'CALLBACK':
+                case 'C:':
                     break;
             }
         }

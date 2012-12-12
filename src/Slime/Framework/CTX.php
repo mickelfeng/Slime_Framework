@@ -12,12 +12,6 @@ class CTX
     /** @var Config */
     public static $config;
 
-    /** @var Http\Request */
-    public static $httpRequest;
-
-    /** @var Http\Response */
-    public static $httpResponse;
-
     /** @var Route */
     public static $route;
 
