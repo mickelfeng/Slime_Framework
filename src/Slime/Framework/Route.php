@@ -6,14 +6,16 @@ use Slime\I\Cache;
 class Route
 {
     private static $innerParams = array(
-        '@METHOD', '@LANG', '@UA'
+        '@METHOD' => 'xxx',
+        '@LANG' => '',
+        '@UA' => '',
     );
 
-    const MAP = 0;
-    const AUTO = 1;
-    const CUSTOM = 2;
-    const ATTEMPT_OTHER = 3;
-    const PRI = 4;
+    const DETAIL = 0;
+    const MODE_AUTO = 1;
+    const MODE_CUSTOM = 2;
+    const ATTEMPT_OTHER_MODE = 3;
+    const PRI_MODE = 4;
 
     const CALLBACK = 0;
     const ARGS = 1;
@@ -22,7 +24,7 @@ class Route
 
     public $callback;
 
-    public $params = array();
+    public $args = array();
 
     private function __construct()
     {
@@ -57,7 +59,7 @@ class Route
                             $obj->callback = self::parseReplace($data[self::CALLBACK], $match);
                         }
                         foreach ($data[self::ARGS] as $k=>$arg) {
-                            $obj->params[$k] = self::parseReplace($arg, $match);
+                            $obj->args[$k] = self::parseReplace($arg, $match);
                         }
                         return true;
                         break;
@@ -108,6 +110,6 @@ class Route
      */
     public function render()
     {
-        return call_user_func(array($this->callback), $this->params);
+        return call_user_func(array($this->callback), $this->args);
     }
 }
