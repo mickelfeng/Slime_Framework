@@ -3,13 +3,11 @@ namespace Slime\I;
 
 interface Cache
 {
-    public function factory(array $config);
-
-    public function get($key);
+    public function get($key, $default = null);
 
     public function set($key, $value, $expire);
 
-    public function getMulti($key);
+    public function getMulti($keys, $default = null);
 
     public function setMulti(array $mapKeyValue, $expire);
 

@@ -12,9 +12,8 @@ class Bootstrap
         CTX::$config = new Config($app->getConfigDir());
     }
 
-    public function run(Cache $cacheInstance)
+    public function run()
     {
-        CTX::$cache = $cacheInstance;
         CTX::$profiler = new Profiler();
         CTX::$event = new Event();
 
@@ -33,7 +32,7 @@ class Bootstrap
 
     private function runHttp()
     {
-        CTX::$route = Route::FactoryFromHttpRequest(
+        CTX::$route = Route::factoryFromHttpRequest(
             CTX::$config->get(CTX::$app->getRouteConfigName()),
             CTX::$app->getBLLDir()
         );

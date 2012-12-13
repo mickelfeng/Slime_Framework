@@ -5,7 +5,7 @@ use Slime\I\Cache;
 use InvalidArgumentException;
 use RuntimeException;
 
-class Memcached implements Cache
+class Xcache implements Cache
 {
     public function get($key, $default = null)
     {

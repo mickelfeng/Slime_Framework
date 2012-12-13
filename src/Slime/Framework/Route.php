@@ -1,10 +1,12 @@
 <?php
 namespace Slime\Framework;
 
+use Slime\I\Cache;
+
 class Route
 {
     private static $innerParams = array(
-        'METHOD', 'LANG', 'UA'
+        '@METHOD', '@LANG', '@UA'
     );
 
     const MAP = 0;
@@ -27,7 +29,7 @@ class Route
         ;
     }
 
-    public static function FactoryFromHttpRequest($rulesConfig, $bllDir)
+    public static function factoryFromHttpRequest($rulesConfig, $bllDir)
     {
         $route = new self();
 
@@ -38,15 +40,26 @@ class Route
 
     private static function parseCustomRules(Route $obj, $requestUri, $rulesMap, $bllDir)
     {
-        $result = false;
         foreach ($rulesMap as $rule => $data) {
             $ruleType = substr($rule, 0, 2);
             $ruleDetail = substr($rule, 2);
             switch ($ruleType) {
                 case 'R:':
                     if (preg_match($rule, $requestUri, $match)) {
-                        $block = self::getParseRuleReplace($rule, $data);
-                        $result = true;
+                        unset($match[0]);
+                        $match += self::$innerParams;
+                        if (is_array($data[self::CALLBACK])) {
+                            $obj->callback = array(
+                                self::parseReplace($data[self::CALLBACK][0], $match),
+                                self::parseReplace($data[self::CALLBACK][1], $match)
+                            );
+                        } else {
+                            $obj->callback = self::parseReplace($data[self::CALLBACK], $match);
+                        }
+                        foreach ($data[self::ARGS] as $k=>$arg) {
+                            $obj->params[$k] = self::parseReplace($arg, $match);
+                        }
+                        return true;
                         break;
                     }
                     break;
@@ -54,29 +67,32 @@ class Route
                     break;
             }
         }
-        return $result;
+        return false;
     }
 
-    private static function parseAutomatic(Route $obj, $bllDir)
+    private static function parseReplace($strSource, array $replaceAll)
     {
-        return true;
-    }
-
-    private static function getParseRuleReplace($rule, $data)
-    {
-        $blockCallBack = $data[self::CALLBACK];
-        $blockArgs = $data[self::ARGS];
-    }
-
-    private static function getParseBlock($block)
-    {
-        $result = array();
-
-
-        if (preg_match_all('#[^$]($\d+)#', $block, $match)) {
-            unset($match[0]);
-            $result = sort($match);
+        $blocks = self::parseBlocks($strSource);
+        $arrFind = $arrReplace = array();
+        foreach ($blocks as $block) {
+            if (isset($replaceAll[$block])) {
+                $arrFind[] = $block;
+                $arrReplace[] = $replaceAll[$block];
+            }
         }
+        return str_replace($arrFind, $arrReplace, $strSource);
+    }
+
+    private static function parseBlocks($string)
+    {
+        if (preg_match_all('#[^$]($\d+)#', $string, $match)) {
+            unset($match[0]);
+        }
+        $re = implode(self::$innerParams, '|');
+        if (preg_match_all("#($re)#", $string, $match1)) {
+            unset($match1[0]);
+        }
+        return $match + $match1;
     }
 
     public static function FactoryFromCliInput(Cli\Input $input)

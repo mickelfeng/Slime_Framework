@@ -4,7 +4,7 @@ use Slime\Framework\Route as R;
 return array(
     R::MAP => array(
         'R:#^(^/.*)/(^/.*)\.(^\?.*)#' => array(
-            R::CALLBACK => array('$1_$2','@METHOD'),
+            R::CALLBACK => array('$1_$2','@METHOD@'),
             R::ARGS     => array('ext' => '$3', 'custom' => 'app1_$3')
         ),
     ),
