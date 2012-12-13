@@ -3,6 +3,11 @@ namespace Slime\Framework;
 
 class Event
 {
+    CONST PRE_SYS = 'pre_system';
+    CONST PRE_APP = 'pre_app';
+    CONST POST_APP = 'post_app';
+    CONST POST_SYS = 'post_system';
+
     private $events = array();
 
     public function callback($name)

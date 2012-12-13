@@ -1,12 +1,15 @@
 <?php
 namespace Slime\Framework;
 
+use Slime\I\Frame_App;
+use Slime\I\Cache;
+
 class CTX
 {
     /** @var Event */
     public static $event;
 
-    /** @var I_App */
+    /** @var Frame_App */
     public static $app;
 
     /** @var Config */
@@ -17,4 +20,7 @@ class CTX
 
     /** @var Profiler */
     public static $profiler;
+
+    /** @var Cache */
+    public static $cache;
 }

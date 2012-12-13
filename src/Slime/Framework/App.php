@@ -1,7 +1,9 @@
 <?php
 namespace Slime\Framework;
 
-class App implements I_APP
+use Slime\I\Frame_App;
+
+class App implements Frame_App
 {
     private $appDir;
     private $bllDir;
@@ -10,6 +12,11 @@ class App implements I_APP
     private $i18nDir;
     private $libraryDir;
     private $viewDir;
+
+    private $eventConfigName;
+    private $routeConfigName;
+    private $constantConfigName;
+    private $cacheConfigName;
 
     public function getAppDir()
     {
@@ -46,7 +53,32 @@ class App implements I_APP
         return $this->viewDir;
     }
 
-    public function __construct($appDir)
+    public function getCacheConfigName()
+    {
+        return $this->cacheConfigName;
+    }
+
+    public function getConstantConfigName()
+    {
+        return $this->constantConfigName;
+    }
+
+    public function getEventConfigName()
+    {
+        return $this->eventConfigName;
+    }
+
+    public function getRouteConfigName()
+    {
+        return $this->routeConfigName;
+    }
+
+    public function __construct($appDir,
+        $cacheConfigName = 'cache',
+        $constantConfigName = 'constant',
+        $eventConfigName = 'event',
+        $routeConfigName = 'route'
+    )
     {
         $this->appDir = $appDir;
         $this->bllDir = $appDir . DIRECTORY_SEPARATOR . 'BLL';
@@ -55,5 +87,10 @@ class App implements I_APP
         $this->i18nDir = $appDir . DIRECTORY_SEPARATOR . 'I18n';
         $this->libraryDir = $appDir . DIRECTORY_SEPARATOR . 'Library';
         $this->viewDir = $appDir . DIRECTORY_SEPARATOR . 'View';
+
+        $this->cacheConfigName = $cacheConfigName;
+        $this->constantConfigName = $constantConfigName;
+        $this->eventConfigName = $eventConfigName;
+        $this->routeConfigName = $routeConfigName;
     }
 }

@@ -3,6 +3,10 @@ namespace Slime\Framework;
 
 class Route
 {
+    private static $innerParams = array(
+        'METHOD', 'LANG', 'UA'
+    );
+
     const MAP = 0;
     const AUTO = 1;
     const CUSTOM = 2;
@@ -41,7 +45,7 @@ class Route
             switch ($ruleType) {
                 case 'R:':
                     if (preg_match($rule, $requestUri, $match)) {
-                        preg
+                        $block = self::getParseRuleReplace($rule, $data);
                         $result = true;
                         break;
                     }
@@ -56,6 +60,23 @@ class Route
     private static function parseAutomatic(Route $obj, $bllDir)
     {
         return true;
+    }
+
+    private static function getParseRuleReplace($rule, $data)
+    {
+        $blockCallBack = $data[self::CALLBACK];
+        $blockArgs = $data[self::ARGS];
+    }
+
+    private static function getParseBlock($block)
+    {
+        $result = array();
+
+
+        if (preg_match_all('#[^$]($\d+)#', $block, $match)) {
+            unset($match[0]);
+            $result = sort($match);
+        }
     }
 
     public static function FactoryFromCliInput(Cli\Input $input)

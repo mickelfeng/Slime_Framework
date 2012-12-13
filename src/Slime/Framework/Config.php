@@ -3,7 +3,6 @@ namespace Slime\Framework;
 
 class Config
 {
-    /** @var I_APP */
     protected $dir;
 
     protected $configs = array();
@@ -14,54 +13,52 @@ class Config
     }
 
     /**
-     * @static
      * @param string $key
+     * @param mixed $default
      * @return mixed
      */
-    public function get($key)
+    public function get($key, $default = null)
     {
-        if (!isset($this->configs[$key])) {
-            $file = $this->dir . DIRECTORY_SEPARATOR . $key . '.php';
-            $this->configs[$key] = require $this->dir . DIRECTORY_SEPARATOR . $key . '.php';
+        if (strpos($key, '.')===false) {
+            if (!isset($this->configs[$key])) {
+                $file = $this->dir . DIRECTORY_SEPARATOR . $key . '.php';
+                $this->configs[$key] = require $this->dir . DIRECTORY_SEPARATOR . $key . '.php';
+            }
+            return isset($this->configs[$key]) ? $this->configs[$key] : $default;
+        } else {
+            $arr = explode('.', $key);
+            $v = $this->configs;
+            if (!isset($arr[0])) {
+                $this->configs[$key] = require $this->dir . DIRECTORY_SEPARATOR . $key . '.php';
+            }
+            foreach ($arr as $k) {
+                if (!isset($v[$k])) {
+                    return $default;
+                }
+                $v = $v[$k];
+            }
+            return $v;
         }
-        return $this->configs[$key];
     }
 
     public function set($key, $value)
     {
-        $this->configs[$key] = $value;
-    }
-
-    public function getRec($key, $default = null)
-    {
-        $arr = explode('.', $key);
-        $v = $this->configs;
-        if (!isset($arr[0])) {
-            $this->configs[$key] = require $this->dir . DIRECTORY_SEPARATOR . $key . '.php';
-        }
-        foreach ($arr as $k) {
-            if (!isset($v[$k])) {
-                return $default;
+        if (strpos($key, '.')===false) {
+            $this->configs[$key] = $value;
+        } else {
+            $arr = explode('.', $key);
+            $v = &$this->configs;
+            if (!isset($arr[0])) {
+                $this->configs[$key] = require $this->dir . DIRECTORY_SEPARATOR . $key . '.php';
             }
-            $v = $v[$k];
-        }
-        return $v;
-    }
-
-    public function setRec($key, $value)
-    {
-        $arr = explode('.', $key);
-        $v = &$this->configs;
-        if (!isset($arr[0])) {
-            $this->configs[$key] = require $this->dir . DIRECTORY_SEPARATOR . $key . '.php';
-        }
-        $len = count($arr);
-        foreach ($arr as $k) {
-            if (!isset($v[$k])) {
-                $v[$k] = array();
+            $len = count($arr);
+            foreach ($arr as $k) {
+                if (!isset($v[$k])) {
+                    $v[$k] = array();
+                }
+                $v = &$v[$k];
             }
-            $v = &$v[$k];
+            $v = $value;
         }
-        $v = $value;
     }
 }

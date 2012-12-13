@@ -1,29 +1,30 @@
 <?php
 namespace Slime\Framework;
 
+use Slime\I\Frame_App;
+use Slime\I\Cache;
+
 class Bootstrap
 {
-    CONST EVENT_PRE_SYS = 'pre_system';
-    CONST EVENT_PRE_APP = 'pre_app';
-    CONST EVENT_POST_APP = 'post_app';
-    CONST EVENT_POST_SYS = 'post_system';
-
-    public function __construct(I_APP $app)
+    public function __construct(Frame_App $app)
     {
         CTX::$app = $app;
-        CTX::$event = new Event();
         CTX::$config = new Config($app->getConfigDir());
-        CTX::$profiler = new Profiler();
     }
 
-    public function run()
+    public function run(Cache $cacheInstance)
     {
-        CTX::$event->addMulti(CTX::$config->get('event'));
-        CTX::$event->callback(self::EVENT_PRE_SYS);
+        CTX::$cache = $cacheInstance;
+        CTX::$profiler = new Profiler();
+        CTX::$event = new Event();
+
+        CTX::$event->addMulti(CTX::$config->get(CTX::$app->getEventConfigName()));
+        CTX::$event->callback(Event::PRE_SYS);
+
         substr(php_sapi_name(), 0, 3) == 'cgi' ?
             $this->runHttp():
             $this->runCli();
-        CTX::$event->callback(self::EVENT_POST_SYS);
+        CTX::$event->callback(Event::POST_SYS);
     }
 
     private function runCli()
@@ -33,11 +34,11 @@ class Bootstrap
     private function runHttp()
     {
         CTX::$route = Route::FactoryFromHttpRequest(
-            CTX::$config->get('route'),
+            CTX::$config->get(CTX::$app->getRouteConfigName()),
             CTX::$app->getBLLDir()
         );
-        CTX::$event->callback(self::EVENT_PRE_APP);
+        CTX::$event->callback(Event::PRE_APP);
         CTX::$route->render();
-        CTX::$event->callback(self::EVENT_POST_APP);
+        CTX::$event->callback(Event::POST_APP);
     }
 }
