@@ -17,8 +17,9 @@ class Route
     const AUTO_TYPE = 2;
     const MODE_CUSTOM = 3;
     const CUSTOM_DETAIL = 4;
-    const ATTEMPT_OTHER_MODE = 5;
-    const PRI_MODE = 6;
+    const CUSTOM_MAP = 5;
+    const ATTEMPT_OTHER_MODE = 6;
+    const PRI_MODE = 7;
 
     const AUTO_TYPE_1 = 1;
     const AUTO_TYPE_2 = 2;
