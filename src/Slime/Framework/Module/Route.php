@@ -1,8 +1,5 @@
 <?php
-namespace Slime\Framework;
-
-use Slime\I\Cache;
-use RuntimeException;
+namespace Slime\Framework\Module;
 
 class Route
 {

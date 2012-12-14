@@ -1,16 +1,17 @@
 <?php
 namespace Slime\Framework;
 
-use Slime\I\Frame_App;
-use Slime\I\Cache;
+use Slime\I\App;
+use Slime\I\Config;
+use Slime\I\Event;
+use Slime\I\CTX;
 
 class Bootstrap
 {
-    public function __construct(Frame_App $app)
+    public function __construct(App $app)
     {
         CTX::$app = $app;
         CTX::$config = new Config($app->getConfigDir());
-        CTX::$profiler = new Profiler();
         CTX::$event = new Event();
 
         CTX::$event->addMulti(CTX::$config->get(CTX::$app->getEventConfigName()));

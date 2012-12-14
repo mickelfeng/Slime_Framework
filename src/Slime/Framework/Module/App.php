@@ -1,9 +1,7 @@
 <?php
-namespace Slime\Framework;
+namespace Slime\Framework\Module;
 
-use Slime\I\Frame_App;
-
-class App implements Frame_App
+class App implements I_App
 {
     private $appDir;
     private $bllDir;

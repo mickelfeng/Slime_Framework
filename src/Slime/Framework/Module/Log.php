@@ -1,8 +1,5 @@
 <?php
-namespace Slime\Framework;
-
-use Slime\I\Log as ILog;
-use RuntimeException;
+namespace Slime\Framework\Module;
 
 class Log implements ILog
 {

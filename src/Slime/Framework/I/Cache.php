@@ -1,7 +1,7 @@
 <?php
-namespace Slime\I;
+namespace Slime\Framework;
 
-interface Cache
+interface I_Cache
 {
     public function get($key, $default = null);
 

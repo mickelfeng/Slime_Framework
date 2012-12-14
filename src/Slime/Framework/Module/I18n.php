@@ -1,5 +1,5 @@
 <?php
-namespace Slime\Framework;
+namespace Slime\Framework\Module;
 
 class I18n
 {
