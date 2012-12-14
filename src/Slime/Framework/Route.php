@@ -2,20 +2,27 @@
 namespace Slime\Framework;
 
 use Slime\I\Cache;
+use RuntimeException;
 
 class Route
 {
-    private static $innerParams = array(
+    //@todo delete
+    private static $innerReplace = array(
         '@METHOD' => 'xxx',
         '@LANG' => '',
         '@UA' => '',
     );
 
-    const DETAIL = 0;
     const MODE_AUTO = 1;
-    const MODE_CUSTOM = 2;
-    const ATTEMPT_OTHER_MODE = 3;
-    const PRI_MODE = 4;
+    const AUTO_TYPE = 2;
+    const MODE_CUSTOM = 3;
+    const CUSTOM_DETAIL = 4;
+    const ATTEMPT_OTHER_MODE = 5;
+    const PRI_MODE = 6;
+
+    const AUTO_TYPE_1 = 1;
+    const AUTO_TYPE_2 = 2;
+    const AUTO_TYPE_3 = 2;
 
     const CALLBACK = 0;
     const ARGS = 1;
@@ -31,25 +38,60 @@ class Route
         ;
     }
 
-    public static function factoryFromHttpRequest($rulesConfig, $bllDir)
+    public static function factoryFromHttpRequest($routeConfig, $bllDir, $innerReplace = array())
     {
-        $route = new self();
+        $modes = array();
+        if ($routeConfig[self::MODE_AUTO] && $routeConfig[self::MODE_CUSTOM]) {
+            $p1 = isset($routeConfig[self::PRI_MODE]) ? self::PRI_MODE : self::MODE_AUTO;
+            $modes[] = $p1;
+            if ($routeConfig[self::ATTEMPT_OTHER_MODE]) {
+                $modes[] = $p1===self::MODE_AUTO ? self::MODE_CUSTOM : self::MODE_AUTO;
+            }
+        } elseif ($routeConfig[self::MODE_AUTO]) {
+            $modes[] = self::MODE_AUTO;
+        } elseif ($routeConfig[self::MODE_CUSTOM]) {
+            $modes[] = self::MODE_CUSTOM;
+        } else {
+            throw new RuntimeException('All mode is disabled in config');
+        }
 
-        //@todo
+        //@todo self::innerReplace
+
+        $route = new self();
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $result = false;
+        foreach ($modes as $mode) {
+            $result = $mode===self::MODE_AUTO ?
+                self::parseAutomatic($route, $requestUri, $routeConfig[self::AUTO_TYPE]) :
+                self::parseCustom($route, $requestUri, $routeConfig[self::CUSTOM_DETAIL], $innerReplace);
+            if ($result) {
+                break;
+            }
+        }
+        if (!$result) {
+            throw new RuntimeException('No url matched');
+        }
 
         return $route;
     }
 
-    private static function parseCustomRules(Route $obj, $requestUri, $rulesMap, $bllDir)
+    private static function parseAutomatic(Route $obj, $requestUri, $mode)
     {
-        foreach ($rulesMap as $rule => $data) {
+        $result = false;
+
+        return $result;
+    }
+
+    private static function parseCustom(Route $obj, $requestUri, $rules, $innerReplace)
+    {
+        foreach ($rules as $rule => $data) {
             $ruleType = substr($rule, 0, 2);
             $ruleDetail = substr($rule, 2);
             switch ($ruleType) {
                 case 'R:':
                     if (preg_match($rule, $requestUri, $match)) {
                         unset($match[0]);
-                        $match += self::$innerParams;
+                        $match += self::$innerReplace;
                         if (is_array($data[self::CALLBACK])) {
                             $obj->callback = array(
                                 self::parseReplace($data[self::CALLBACK][0], $match),
@@ -90,7 +132,7 @@ class Route
         if (preg_match_all('#[^$]($\d+)#', $string, $match)) {
             unset($match[0]);
         }
-        $re = implode(self::$innerParams, '|');
+        $re = implode(self::$innerReplace, '|');
         if (preg_match_all("#($re)#", $string, $match1)) {
             unset($match1[0]);
         }
