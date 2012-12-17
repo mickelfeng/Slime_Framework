@@ -1,7 +1,7 @@
 <?php
-namespace Slime\Framework;
+namespace Slime\Framework\I;
 
-interface I_Log
+interface Log
 {
     const LEVEL_DEBUG = 0;
     const LEVEL_NOTICE = 1;

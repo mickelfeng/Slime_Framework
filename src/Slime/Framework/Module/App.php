@@ -1,6 +1,8 @@
 <?php
 namespace Slime\Framework\Module;
 
+use Slime\Framework\I\App as I_App;
+
 class App implements I_App
 {
     private $appDir;

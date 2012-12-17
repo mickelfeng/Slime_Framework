@@ -1,7 +1,7 @@
 <?php
 namespace Slime\Framework\Module;
 
-class Config
+class Config implements I_Config
 {
     protected $dir;
 

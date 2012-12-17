@@ -1,7 +1,27 @@
 <?php
-/**
- * User: liuzhen02
- * Date: 12-12-14
- * Time: 下午6:58
- * To change this template use File | Settings | File Templates.
- */
+namespace Slime\Framework\I;
+
+interface Route
+{
+    const MODE_AUTO = 1;
+    const AUTO_TYPE = 2;
+    const MODE_CUSTOM = 3;
+    const CUSTOM_DETAIL = 4;
+    const CUSTOM_MAP = 5;
+    const ATTEMPT_OTHER_MODE = 6;
+    const PRI_MODE = 7;
+
+    const CALLBACK = 0;
+    const ARGS = 1;
+
+    /**
+     * @return CallBack
+     */
+    public function makeFromHttpRequest();
+
+    /**
+     * @return CallBack
+     */
+    public function makeFromCliInput();
+
+}

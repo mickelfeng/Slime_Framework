@@ -1,49 +1,28 @@
 <?php
 namespace Slime\Framework\Module;
 
-class Event
+use Slime\Framework\I\Event as IEvent;
+use Slime\Framework\I\CallBack as ICallBack;
+
+class Event implements IEvent
 {
-    CONST PRE_SYS = 'pre_system';
-    CONST PRE_APP = 'pre_app';
-    CONST POST_APP = 'post_app';
-    CONST POST_SYS = 'post_system';
-
-    private $events = array();
-
-    public function callback($name)
+    public function occur($name)
     {
-        if (isset($this->events[$name])) {
-            list($callback, $params) = $this->events[$name];
-            call_user_func_array($callback, $params);
-        }
+        // TODO: Implement occur() method.
     }
 
-    public function add($name, $callback, $params = array())
+    public function add($name, ICallBack $callback)
     {
-        $this->events[$name] = array($callback, $params);
+        // TODO: Implement add() method.
     }
 
     public function addMulti($mapNameCallback)
     {
-        foreach ($mapNameCallback as $name=>$callback) {
-            $this->events[$name] = $callback;
-        }
+        // TODO: Implement addMulti() method.
     }
 
     public function delete($name)
     {
-        if (isset($this->events[$name])) {
-            unset($this->events[$name]);
-        }
-    }
-
-    public function free()
-    {
-        $this->events = array();
-    }
-
-    public function getAllRegisterEvent()
-    {
-        return array_keys($this->events);
+        // TODO: Implement delete() method.
     }
 }

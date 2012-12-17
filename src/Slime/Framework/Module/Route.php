@@ -1,7 +1,10 @@
 <?php
 namespace Slime\Framework\Module;
 
-class Route
+use Slime\Framework\I\Route as I_Route;
+use Slime\Framework\I\CallBack as I_CallBack;
+
+class Route implements I_Route
 {
     //@todo delete
     private static $innerReplace = array(
@@ -9,32 +12,6 @@ class Route
         '@LANG' => '',
         '@UA' => '',
     );
-
-    const MODE_AUTO = 1;
-    const AUTO_TYPE = 2;
-    const MODE_CUSTOM = 3;
-    const CUSTOM_DETAIL = 4;
-    const CUSTOM_MAP = 5;
-    const ATTEMPT_OTHER_MODE = 6;
-    const PRI_MODE = 7;
-
-    const AUTO_TYPE_1 = 1;
-    const AUTO_TYPE_2 = 2;
-    const AUTO_TYPE_3 = 2;
-
-    const CALLBACK = 0;
-    const ARGS = 1;
-
-    public $file;
-
-    public $callback;
-
-    public $args = array();
-
-    private function __construct()
-    {
-        ;
-    }
 
     public static function factoryFromHttpRequest($routeConfig, $bllDir, $innerReplace = array())
     {
@@ -151,5 +128,21 @@ class Route
     public function render()
     {
         return call_user_func(array($this->callback), $this->args);
+    }
+
+    /**
+     * @return I_CallBack
+     */
+    public function makeFromHttpRequest()
+    {
+        // TODO: Implement makeFromHttpRequest() method.
+    }
+
+    /**
+     * @return I_CallBack
+     */
+    public function makeFromCliInput()
+    {
+        // TODO: Implement makeFromCliInput() method.
     }
 }

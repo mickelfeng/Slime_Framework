@@ -1,7 +1,7 @@
 <?php
-namespace Slime\Framework;
+namespace Slime\Framework\I;
 
-interface I_Profile
+interface Profile
 {
     /**
      * @param string $label

@@ -1,7 +1,7 @@
 <?php
-namespace Slime\Framework;
+namespace Slime\Framework\I;
 
-interface I_Config
+interface Config
 {
     public function get($key, $default = null);
 

@@ -1,6 +1,9 @@
 <?php
 namespace Slime\Framework\Module;
 
+use Slime\Framework\I\Log as ILog;
+use RuntimeException;
+
 class Log implements ILog
 {
     public function setFile($file)
