@@ -1,9 +1,9 @@
 <?php
-use Slime\Framework\Route as R;
+use Slime\Framework\I_Route as R;
 
 return array(
     R::MODE_AUTO => false, //开启自动路由
-    R::AUTO_TYPE => R::AUTO_TYPE_1,
+    R::AUTO_TYPE => 1,
 
     R::MODE_CUSTOM => true, //开启自定义路由
     R::CUSTOM_DETAIL => array(

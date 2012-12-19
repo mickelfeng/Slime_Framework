@@ -1,7 +1,7 @@
 <?php
 namespace Slime\Framework;
 
-class Bootstrap
+class Framework
 {
     private $app;
 
@@ -37,6 +37,6 @@ class Bootstrap
 
     public function __destruct()
     {
-        CTX::$event->callback(Event::POST_SYS);
+        $this->app->getEvent()->occur(I_Event::POST_SYS);
     }
 }

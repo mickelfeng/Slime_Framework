@@ -1,10 +1,12 @@
 <?php
-use Slime\Framework\Bootstrap;
-use Slime\Framework\CTX;
-use Slime\Framework\App;
+use Slime\Framework\Framework;
+use Slime\Framework\M_App;
 use Slime\Cache;
 
 //@todo register autoloader
-$app = new App(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Private');
-$bootstrap = new Bootstrap($app);
+$app = new M_App(
+    dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Private',
+    'zh-cn'
+);
+$bootstrap = new Framework($app);
 $bootstrap->run();
