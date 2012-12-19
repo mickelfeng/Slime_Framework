@@ -1,10 +1,7 @@
 <?php
-namespace Slime\Framework\Module;
+namespace Slime\Framework;
 
-use Slime\Framework\I\Route as I_Route;
-use Slime\Framework\I\CallBack as I_CallBack;
-
-class Route implements I_Route
+class M_Route implements I_Route
 {
     //@todo delete
     private static $innerReplace = array(

@@ -1,5 +1,5 @@
 <?php
-namespace Slime\Framework\Module;
+namespace Slime\Framework;
 
 class CTX
 {

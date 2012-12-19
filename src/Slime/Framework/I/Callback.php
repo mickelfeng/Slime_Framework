@@ -1,7 +1,10 @@
 <?php
-namespace Slime\Framework\I;
+namespace Slime\Framework;
 
-interface CallBack
+interface I_CallBack
 {
+    /**
+     * @return bool
+     */
     public function call();
 }

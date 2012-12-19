@@ -1,7 +1,7 @@
 <?php
-namespace Slime\Framework\Module\I;
+namespace Slime\Framework;
 
-interface I18n
+interface I_I18n
 {
     public function setLangDir($path);
 
@@ -11,5 +11,5 @@ interface I18n
 
     public function loadLangPacket($lang);
 
-    public function get($string, $lang = NULL);
+    public function get($string, $lang = null);
 }

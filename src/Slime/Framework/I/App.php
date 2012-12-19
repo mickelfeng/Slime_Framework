@@ -1,7 +1,7 @@
 <?php
-namespace Slime\Framework\I;
+namespace Slime\Framework;
 
-interface App
+interface I_App
 {
     public function getAppDir();
     public function getBLLDir();

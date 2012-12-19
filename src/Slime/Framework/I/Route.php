@@ -1,7 +1,7 @@
 <?php
-namespace Slime\Framework\I;
+namespace Slime\Framework;
 
-interface Route
+interface I_Route
 {
     const MODE_AUTO = 1;
     const AUTO_TYPE = 2;

@@ -1,16 +1,16 @@
 <?php
-namespace Slime\Framework\I;
+namespace Slime\Framework;
 
-Interface Event
+Interface I_Event
 {
-    CONST PRE_SYzS = 'pre_system';
-    CONST PRE_APP = 'pre_app';
+    CONST PRE_SYS  = 'pre_system';
+    CONST PRE_APP  = 'pre_app';
     CONST POST_APP = 'post_app';
     CONST POST_SYS = 'post_system';
 
     public function occur($name);
 
-    public function add($name, CallBack $callback);
+    public function add($name, I_CallBack $callback);
 
     public function addMulti($mapNameCallback);
 

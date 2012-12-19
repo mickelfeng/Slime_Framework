@@ -1,7 +1,7 @@
 <?php
-namespace Slime\Framework\Module;
+namespace Slime\Framework;
 
-class Config implements I_Config
+class M_Config implements I_Config
 {
     protected $dir;
 
@@ -51,7 +51,6 @@ class Config implements I_Config
             if (!isset($arr[0])) {
                 $this->configs[$key] = require $this->dir . DIRECTORY_SEPARATOR . $key . '.php';
             }
-            $len = count($arr);
             foreach ($arr as $k) {
                 if (!isset($v[$k])) {
                     $v[$k] = array();

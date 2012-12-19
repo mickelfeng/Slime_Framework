@@ -1,7 +1,7 @@
 <?php
-namespace Slime\Framework\I;
+namespace Slime\Framework;
 
-interface Profile
+interface I_Profile
 {
     /**
      * @param string $label
@@ -14,7 +14,7 @@ interface Profile
      * @param $tick
      * @return void
      */
-    public function end($tick);
+    public function stop($tick);
 
     public function result($type = null);
 

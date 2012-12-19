@@ -1,7 +1,7 @@
 <?php
-namespace Slime\Framework\Module;
+namespace Slime\Framework;
 
-class I18n
+class M_I18n implements I_I18n
 {
     private $_lang;
     private $_path;
