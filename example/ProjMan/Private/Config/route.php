@@ -7,7 +7,7 @@ return array(
 
     R::MODE_CUSTOM => true, //开启自定义路由
     R::CUSTOM_DETAIL => array(
-        'R:#^(^/.*)/(^/.*)\.(^\?.*)#' => array(
+        '#^(^/.*)/(^/.*)\.(^\?.*)#' => array(
             R::CALLBACK => array('$1_$2','@METHOD'),
             R::ARGS     => array('ext' => '$3', 'custom' => 'app1_$3')
         ),

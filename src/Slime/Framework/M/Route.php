@@ -3,14 +3,24 @@ namespace Slime\Framework;
 
 class M_Route implements I_Route
 {
-    //@todo delete
-    private static $innerReplace = array(
-        '@METHOD' => 'xxx',
-        '@LANG' => '',
-        '@UA' => '',
-    );
+    private $innerReplace = array();
 
-    public static function factoryFromHttpRequest($routeConfig, $bllDir, $innerReplace = array())
+    /**
+     * @param array $routeConfig
+     * @param I_CallBack $callback
+     * @return bool
+     */
+    public function generate($routeConfig, I_CallBack $callback)
+    {
+        $this->innerReplace = $routeConfig[I_Route::CUSTOM_MAP];
+        if (php_sapi_name()=='cli') {
+            return $this->generateFromCli($routeConfig, $callback);
+        } else {
+            return $this->generateFromHttp($routeConfig, $callback);
+        }
+    }
+
+    private function generateFromHttp($routeConfig, I_CallBack $callback)
     {
         $modes = array();
         if ($routeConfig[self::MODE_AUTO] && $routeConfig[self::MODE_CUSTOM]) {
@@ -23,72 +33,64 @@ class M_Route implements I_Route
             $modes[] = self::MODE_AUTO;
         } elseif ($routeConfig[self::MODE_CUSTOM]) {
             $modes[] = self::MODE_CUSTOM;
-        } else {
-            throw new RuntimeException('All mode is disabled in config');
+        }
+        if (empty($modes)) {
+            return false;
         }
 
-        //@todo self::innerReplace
-
-        $route = new self();
         $requestUri = $_SERVER['REQUEST_URI'];
-        $result = false;
         foreach ($modes as $mode) {
             $result = $mode===self::MODE_AUTO ?
-                self::parseAutomatic($route, $requestUri, $routeConfig[self::AUTO_TYPE]) :
-                self::parseCustom($route, $requestUri, $routeConfig[self::CUSTOM_DETAIL], $innerReplace);
+                $this->parseAutomatic($requestUri, $routeConfig[self::AUTO_TYPE], $callback) :
+                $this->parseCustom($requestUri, $routeConfig[self::CUSTOM_DETAIL], $callback);
             if ($result) {
                 break;
             }
         }
-        if (!$result) {
-            throw new RuntimeException('No url matched');
-        }
+        return $result;
 
-        return $route;
     }
 
-    private static function parseAutomatic(Route $obj, $requestUri, $mode)
+    private function generateFromCli($routeConfig)
+    {
+        ;
+    }
+
+    private function parseAutomatic($requestUri, $mode, I_CallBack $callback)
     {
         $result = false;
 
         return $result;
     }
 
-    private static function parseCustom(Route $obj, $requestUri, $rules, $innerReplace)
+    private function parseCustom($requestUri, $rules, I_CallBack $callback)
     {
         foreach ($rules as $rule => $data) {
-            $ruleType = substr($rule, 0, 2);
-            $ruleDetail = substr($rule, 2);
-            switch ($ruleType) {
-                case 'R:':
-                    if (preg_match($rule, $requestUri, $match)) {
-                        unset($match[0]);
-                        $match += self::$innerReplace;
-                        if (is_array($data[self::CALLBACK])) {
-                            $obj->callback = array(
-                                self::parseReplace($data[self::CALLBACK][0], $match),
-                                self::parseReplace($data[self::CALLBACK][1], $match)
-                            );
-                        } else {
-                            $obj->callback = self::parseReplace($data[self::CALLBACK], $match);
-                        }
-                        foreach ($data[self::ARGS] as $k=>$arg) {
-                            $obj->args[$k] = self::parseReplace($arg, $match);
-                        }
-                        return true;
-                        break;
-                    }
-                    break;
-                case 'C:':
-                    break;
+            if (preg_match($rule, $requestUri, $match)) {
+                unset($match[0]);
+                $replaceAll = array_merge($match, $this->innerReplace);
+                if (is_array($data[self::CALLBACK])) {
+                    $callable = array(
+                        $this->parseReplace($data[self::CALLBACK][0], $replaceAll),
+                        $this->parseReplace($data[self::CALLBACK][1], $replaceAll)
+                    );
+                } else {
+                    $callable = $this->parseReplace($data[self::CALLBACK], $replaceAll);
+                }
+                $args = array();
+                foreach ($data[self::ARGS] as $k=>$arg) {
+                    $args[$k] = $this->parseReplace($arg, $match);
+                }
+                $callback->setCallable($callable)->setArgs($args);
+                return true;
             }
         }
         return false;
     }
 
-    private static function parseReplace($strSource, array $replaceAll)
+    private function parseReplace($strSource, array $replaceAll)
     {
-        $blocks = self::parseBlocks($strSource);
+        $blocks = $this->parseBlocks($strSource);
         $arrFind = $arrReplace = array();
         foreach ($blocks as $block) {
             if (isset($replaceAll[$block])) {
@@ -99,47 +101,18 @@ class M_Route implements I_Route
         return str_replace($arrFind, $arrReplace, $strSource);
     }
 
-    private static function parseBlocks($string)
+    private function parseBlocks($string)
     {
         if (preg_match_all('#[^$]($\d+)#', $string, $match)) {
             unset($match[0]);
         }
+        $match1 = array();
+        /*
+         * @todo how to set innerReplace
         $re = implode(self::$innerReplace, '|');
         if (preg_match_all("#($re)#", $string, $match1)) {
             unset($match1[0]);
-        }
-        return $match + $match1;
-    }
-
-    public static function FactoryFromCliInput(Cli\Input $input)
-    {
-    }
-
-    public static function Factory($app, $file, $callback, $params)
-    {
-    }
-
-    /**
-     * @return mixed
-     */
-    public function render()
-    {
-        return call_user_func(array($this->callback), $this->args);
-    }
-
-    /**
-     * @return I_CallBack
-     */
-    public function makeFromHttpRequest()
-    {
-        // TODO: Implement makeFromHttpRequest() method.
-    }
-
-    /**
-     * @return I_CallBack
-     */
-    public function makeFromCliInput()
-    {
-        // TODO: Implement makeFromCliInput() method.
+        }*/
+        return array_merge($match, $match1);
     }
 }

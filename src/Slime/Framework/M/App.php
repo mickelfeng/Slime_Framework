@@ -12,6 +12,9 @@ class M_App implements I_App
     /** @var I_I18n */
     private $i18n;
 
+    /** @var I_CallBack */
+    private $routeCallBack;
+
     private $dirApp, $dirBll, $dirConfig, $dirI18n;
 
     private $configNameEvent, $configNameRoute, $configNameCache;
@@ -103,5 +106,13 @@ class M_App implements I_App
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * @return I_CallBack
+     */
+    public function getRouteCallBack()
+    {
+        return $this->routeCallBack;
     }
 }

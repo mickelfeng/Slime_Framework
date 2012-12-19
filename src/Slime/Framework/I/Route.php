@@ -15,13 +15,9 @@ interface I_Route
     const ARGS = 1;
 
     /**
-     * @return I_CallBack
+     * @param array $routeConfig
+     * @param I_CallBack $callback
+     * @return bool
      */
-    public function makeFromHttpRequest();
-
-    /**
-     * @return I_CallBack
-     */
-    public function makeFromCliInput();
-
+    public function generate($routeConfig, I_CallBack $callback);
 }

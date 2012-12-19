@@ -31,4 +31,9 @@ interface I_App
      * @return I_I18n
      */
     public function getI18n();
+
+    /**
+     * @return I_CallBack
+     */
+    public function getRouteCallBack();
 }
