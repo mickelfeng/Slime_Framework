@@ -1,11 +1,7 @@
 <?php
-namespace Slime\Cache;
+namespace Slime\Framework;
 
-use Slime\I\Cache;
-use InvalidArgumentException;
-use RuntimeException;
-
-class Memcached implements Cache
+class M_Cache_Xcache implements I_Cache
 {
     public function get($key, $default = null)
     {

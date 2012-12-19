@@ -1,11 +1,7 @@
 <?php
-namespace Slime\Cache;
+namespace Slime\Framework;
 
-use Slime\I\Cache;
-use InvalidArgumentException;
-use RuntimeException;
-
-class APC implements Cache
+class M_Cache_APC implements I_Cache
 {
     public function get($key, $default = null)
     {

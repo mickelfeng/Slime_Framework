@@ -1,11 +1,7 @@
 <?php
-namespace Slime\Cache;
+namespace Slime\Framework;
 
-use Slime\I\Cache;
-use InvalidArgumentException;
-use RuntimeException;
-
-class File implements Cache
+class M_Cache_File implements I_Cache
 {
     private $dir;
     private $file;
