@@ -12,12 +12,23 @@ interface I_App
     public function getConfigNameRoute();
     public function getConfigNameCache();
 
-    /** @return I_Config */
+    /**
+     * @return I_Config
+     */
     public function getConfig();
 
-    /** @return I_Event */
+    /**
+     * @return I_Event
+     */
     public function getEvent();
 
-    /** @return I_I18n */
+    /**
+     * @return I_Route
+     */
+    public function getRoute();
+
+    /**
+     * @return I_I18n
+     */
     public function getI18n();
 }

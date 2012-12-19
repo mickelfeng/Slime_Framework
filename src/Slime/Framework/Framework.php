@@ -3,14 +3,13 @@ namespace Slime\Framework;
 
 class Bootstrap
 {
+    private $app;
+
     public function __construct(I_App $app)
     {
-        CTX::$app = $app;
-        CTX::$config = new Config($app->getConfigDir());
-        CTX::$event = new Event();
-
-        CTX::$event->addMulti(CTX::$config->get(CTX::$app->getEventConfigName()));
-        CTX::$event->callback(Event::PRE_SYS);
+        $this->app = $app;
+        $this->app->getEvent()->addMulti($app->getConfig()->get($app->getConfigNameEvent()));
+        $this->app->getEvent()->occur(I_Event::PRE_SYS);
     }
 
     public function run()
@@ -22,17 +21,18 @@ class Bootstrap
 
     private function runCli()
     {
+        $callback = $this->app->getRoute()->makeFromCliInput();
+        $this->app->getEvent()->occur(I_Event::PRE_APP);
+        $callback->call();
+        $this->app->getEvent()->occur(I_Event::POST_APP);
     }
 
     private function runHttp()
     {
-        CTX::$route = Route::factoryFromHttpRequest(
-            CTX::$config->get(CTX::$app->getRouteConfigName()),
-            CTX::$app->getBLLDir()
-        );
-        CTX::$event->callback(Event::PRE_APP);
-        CTX::$route->render();
-        CTX::$event->callback(Event::POST_APP);
+        $callback = $this->app->getRoute()->makeFromHttpRequest();
+        $this->app->getEvent()->occur(I_Event::PRE_APP);
+        $callback->call();
+        $this->app->getEvent()->occur(I_Event::POST_APP);
     }
 
     public function __destruct()

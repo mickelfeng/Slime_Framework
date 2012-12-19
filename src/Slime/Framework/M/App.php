@@ -17,19 +17,25 @@ class M_App implements I_App
     private $configNameEvent, $configNameRoute, $configNameCache;
 
     public function __construct($dirApp,
+                                $language,
                                 $configNameCache = 'cache',
                                 $configNameEvent = 'event',
                                 $configNameRoute = 'route'
     )
     {
-        $this->appDir = $dirApp;
-        $this->bllDir = $dirApp . DIRECTORY_SEPARATOR . 'BLL';
-        $this->configDir = $dirApp . DIRECTORY_SEPARATOR . 'Config';
-        $this->i18nDir = $dirApp . DIRECTORY_SEPARATOR . 'I18n';
+        $this->dirApp = $dirApp;
+        $this->dirBll = $dirApp . DIRECTORY_SEPARATOR . 'BLL';
+        $this->dirConfig = $dirApp . DIRECTORY_SEPARATOR . 'Config';
+        $this->dirI18n = $dirApp . DIRECTORY_SEPARATOR . 'I18n';
 
         $this->configNameCache = $configNameCache;
         $this->configNameEvent = $configNameEvent;
         $this->configNameRoute = $configNameRoute;
+
+        $this->event = new M_Event();
+        $this->config = new M_Config($this->dirConfig);
+        $this->i18n = new M_I18n($language);
+        $this->route = new M_Route();
     }
 
     /**
@@ -89,5 +95,13 @@ class M_App implements I_App
     public function getI18n()
     {
         return $this->i18n;
+    }
+
+    /**
+     * @return I_Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }

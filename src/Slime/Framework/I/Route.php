@@ -15,12 +15,12 @@ interface I_Route
     const ARGS = 1;
 
     /**
-     * @return CallBack
+     * @return I_CallBack
      */
     public function makeFromHttpRequest();
 
     /**
-     * @return CallBack
+     * @return I_CallBack
      */
     public function makeFromCliInput();
 
