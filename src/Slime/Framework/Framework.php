@@ -1,14 +1,9 @@
 <?php
 namespace Slime\Framework;
 
-use Slime\I\App;
-use Slime\I\Config;
-use Slime\I\Event;
-use Slime\I\CTX;
-
 class Bootstrap
 {
-    public function __construct(App $app)
+    public function __construct(I_App $app)
     {
         CTX::$app = $app;
         CTX::$config = new Config($app->getConfigDir());

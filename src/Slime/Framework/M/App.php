@@ -3,92 +3,91 @@ namespace Slime\Framework;
 
 class M_App implements I_App
 {
-    private $appDir;
-    private $bllDir;
-    private $configDir;
-    private $dalDir;
-    private $i18nDir;
-    private $libraryDir;
-    private $viewDir;
+    /** @var I_Config */
+    private $config;
 
-    private $eventConfigName;
-    private $routeConfigName;
-    private $constantConfigName;
-    private $cacheConfigName;
+    /** @var I_Event */
+    private $event;
 
-    public function getAppDir()
-    {
-        return $this->appDir;
-    }
+    /** @var I_I18n */
+    private $i18n;
 
-    public function getBllDir()
-    {
-        return $this->bllDir;
-    }
+    private $dirApp, $dirBll, $dirConfig, $dirI18n;
 
-    public function getConfigDir()
-    {
-        return $this->configDir;
-    }
+    private $configNameEvent, $configNameRoute, $configNameCache;
 
-    public function getDalDir()
-    {
-        return $this->dalDir;
-    }
-
-    public function getI18nDir()
-    {
-        return $this->i18nDir;
-    }
-
-    public function getLibraryDir()
-    {
-        return $this->libraryDir;
-    }
-
-    public function getViewDir()
-    {
-        return $this->viewDir;
-    }
-
-    public function getCacheConfigName()
-    {
-        return $this->cacheConfigName;
-    }
-
-    public function getConstantConfigName()
-    {
-        return $this->constantConfigName;
-    }
-
-    public function getEventConfigName()
-    {
-        return $this->eventConfigName;
-    }
-
-    public function getRouteConfigName()
-    {
-        return $this->routeConfigName;
-    }
-
-    public function __construct($appDir,
-        $cacheConfigName = 'cache',
-        $constantConfigName = 'constant',
-        $eventConfigName = 'event',
-        $routeConfigName = 'route'
+    public function __construct($dirApp,
+                                $configNameCache = 'cache',
+                                $configNameEvent = 'event',
+                                $configNameRoute = 'route'
     )
     {
-        $this->appDir = $appDir;
-        $this->bllDir = $appDir . DIRECTORY_SEPARATOR . 'BLL';
-        $this->configDir = $appDir . DIRECTORY_SEPARATOR . 'Config';
-        $this->dalDir = $appDir . DIRECTORY_SEPARATOR . 'DAL';
-        $this->i18nDir = $appDir . DIRECTORY_SEPARATOR . 'I18n';
-        $this->libraryDir = $appDir . DIRECTORY_SEPARATOR . 'Library';
-        $this->viewDir = $appDir . DIRECTORY_SEPARATOR . 'View';
+        $this->appDir = $dirApp;
+        $this->bllDir = $dirApp . DIRECTORY_SEPARATOR . 'BLL';
+        $this->configDir = $dirApp . DIRECTORY_SEPARATOR . 'Config';
+        $this->i18nDir = $dirApp . DIRECTORY_SEPARATOR . 'I18n';
 
-        $this->cacheConfigName = $cacheConfigName;
-        $this->constantConfigName = $constantConfigName;
-        $this->eventConfigName = $eventConfigName;
-        $this->routeConfigName = $routeConfigName;
+        $this->configNameCache = $configNameCache;
+        $this->configNameEvent = $configNameEvent;
+        $this->configNameRoute = $configNameRoute;
+    }
+
+    /**
+     * @return I_Config
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    public function getConfigNameCache()
+    {
+        return $this->configNameCache;
+    }
+
+    public function getConfigNameEvent()
+    {
+        return $this->configNameEvent;
+    }
+
+    public function getConfigNameRoute()
+    {
+        return $this->configNameRoute;
+    }
+
+    public function getDirApp()
+    {
+        return $this->dirApp;
+    }
+
+    public function getDirBll()
+    {
+        return $this->dirBll;
+    }
+
+    public function getDirConfig()
+    {
+        return $this->dirConfig;
+    }
+
+    public function getDirI18n()
+    {
+        return $this->dirI18n;
+    }
+
+    /**
+     * @return I_Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * @return I_I18n
+     */
+    public function getI18n()
+    {
+        return $this->i18n;
     }
 }

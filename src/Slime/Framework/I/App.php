@@ -3,12 +3,21 @@ namespace Slime\Framework;
 
 interface I_App
 {
-    public function getAppDir();
-    public function getBLLDir();
-    public function getConfigDir();
-    public function getI18nDir();
+    public function getDirApp();
+    public function getDirBLL();
+    public function getDirConfig();
+    public function getDirI18n();
 
-    public function getEventConfigName();
-    public function getRouteConfigName();
-    public function getCacheConfigName();
+    public function getConfigNameEvent();
+    public function getConfigNameRoute();
+    public function getConfigNameCache();
+
+    /** @return I_Config */
+    public function getConfig();
+
+    /** @return I_Event */
+    public function getEvent();
+
+    /** @return I_I18n */
+    public function getI18n();
 }
