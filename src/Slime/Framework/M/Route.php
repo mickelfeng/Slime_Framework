@@ -34,11 +34,9 @@ class M_Route implements I_Route
         } elseif ($routeConfig[self::MODE_CUSTOM]) {
             $modes[] = self::MODE_CUSTOM;
         }
-        if (empty($modes)) {
-            return false;
-        }
 
         $requestUri = $_SERVER['REQUEST_URI'];
+        $result = false;
         foreach ($modes as $mode) {
             $result = $mode===self::MODE_AUTO ?
                 $this->parseAutomatic($requestUri, $routeConfig[self::AUTO_TYPE], $callback) :
