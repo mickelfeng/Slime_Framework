@@ -34,4 +34,12 @@ class Cache_Memcached implements I_Cache
     {
         // TODO: Implement flush() method.
     }
+
+    /**
+     * @return bool
+     */
+    public function isDisabled()
+    {
+        // TODO: Implement isDisabled() method.
+    }
 }

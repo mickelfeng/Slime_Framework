@@ -2,7 +2,6 @@
 namespace Slime\Framework\Impl;
 
 use Slime\Framework\Intf\App as I_App;
-use Slime\Framework\Intf\Cache as I_Cache;
 use Slime\Framework\Intf\CallBack as I_CallBack;
 use Slime\Framework\Intf\Config as I_Config;
 use Slime\Framework\Intf\Event as I_Event;
@@ -10,12 +9,10 @@ use Slime\Framework\Intf\I18n as I_I18n;
 use Slime\Framework\Intf\Log as I_Log;
 use Slime\Framework\Intf\Profile as I_Profile;
 use Slime\Framework\Intf\Route as I_Route;
+use Slime\Framework\Intf\View as I_View;
 
 class App implements I_App
 {
-    /** @var I_Cache */
-    private $cache;
-
     /** @var I_CallBack */
     private $callBack;
 
@@ -37,9 +34,11 @@ class App implements I_App
     /** @var I_Route */
     private $route;
 
-    public function __construct(I_Cache $cache, I_CallBack $callback, I_Config $config, I_Event $event, I_I18n $i18n, I_Log $log, I_Profile $profile, I_Route $route)
+    /** @var I_View */
+    private $view;
+
+    public function __construct(I_CallBack $callback, I_Config $config, I_Event $event, I_I18n $i18n, I_Log $log, I_Profile $profile, I_Route $route, I_View $view)
     {
-        $this->cache = $cache;
         $this->callBack = $callback;
         $this->config = $config;
         $this->event = $event;
@@ -47,19 +46,29 @@ class App implements I_App
         $this->log = $log;
         $this->profile = $profile;
         $this->route = $route;
-    }
-
-    public function run()
-    {
-        ;
+        $this->view = $view;
     }
 
     /**
-     * @return I_Cache
+     * @return void
      */
-    public function getCache()
+    public function run()
     {
-        return $this->cache;
+        $this->event->occur(Event::PRE_SYS);
+
+        $this->route->generate(
+            $this->config->get('route'),
+            $this->callBack
+        );
+        if ($this->callBack->isValidate()) {
+            $this->callBack->setArgs(
+                array_merge(array($this), $this->callBack->getArgs())
+            );
+        }
+
+        $this->event->occur(Event::PRE_APP);
+        $this->callBack->call();
+        $this->event->occur(Event::POST_APP);
     }
 
     /**
@@ -116,5 +125,13 @@ class App implements I_App
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * @return I_View
+     */
+    public function getView()
+    {
+        return $this->view;
     }
 }

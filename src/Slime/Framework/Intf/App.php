@@ -3,12 +3,10 @@ namespace Slime\Framework\Intf;
 
 interface App
 {
-    public function run();
-
     /**
-     * @return Cache
+     * @return void
      */
-    public function getCache();
+    public function run();
 
     /**
      * @return CallBack
@@ -43,4 +41,10 @@ interface App
     /**
      * @return Route
      */
-    public function getRoute();}
+    public function getRoute();
+
+    /**
+     * @return View
+     */
+    public function getView();
+}

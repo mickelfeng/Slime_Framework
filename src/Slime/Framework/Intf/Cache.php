@@ -14,4 +14,9 @@ interface Cache
     public function delete($key);
 
     public function flush();
+
+    /**
+     * @return bool
+     */
+    public function isDisabled();
 }

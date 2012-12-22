@@ -9,11 +9,33 @@ class CallBack implements I_CallBack
     private $callable;
 
     /** @var array */
-    private $args;
+    private $args = array();
 
+    /**
+     * @return mixed
+     */
     public function call()
     {
+        if (!$this->callable) {
+            return false;
+        }
         return call_user_func_array($this->callable, $this->args);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCallable()
+    {
+        return $this->callable;
+    }
+
+    /**
+     * @return array
+     */
+    public function getArgs()
+    {
+        return $this->args;
     }
 
     /**
@@ -30,5 +52,13 @@ class CallBack implements I_CallBack
     public function setArgs(array $args)
     {
         $this->args = $args;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValidate()
+    {
+        return !empty($this->callable);
     }
 }

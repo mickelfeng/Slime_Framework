@@ -3,73 +3,82 @@ namespace Slime\Framework\Impl;
 
 use Slime\Framework\Intf\CallBack as I_CallBack;
 use Slime\Framework\Intf\Route as I_Route;
+use Slime\Framework\Intf\Cache as I_Cache;
 
 class Route implements I_Route
 {
-    private $innerReplace = array();
+    private $customMap = array();
+
+    /**
+     * @var array
+     */
+    private $routeConfig;
+
+    /**
+     * @var I_CallBack
+     */
+    private $callback;
+
 
     /**
      * @param array $routeConfig
-     * @param I_CallBack $callback
-     * @return bool
+     * @param \Slime\Framework\Intf\CallBack $callback
+     * @return void
      */
-    public function generate($routeConfig, I_CallBack $callback)
+    public function generate(array $routeConfig, I_CallBack $callback)
     {
-        $this->innerReplace = $routeConfig[I_Route::CUSTOM_MAP];
-        if (php_sapi_name()=='cli') {
-            return $this->generateFromCli($routeConfig, $callback);
-        } else {
-            return $this->generateFromHttp($routeConfig, $callback);
-        }
+        $this->routeConfig = $routeConfig;
+        $this->customMap = $routeConfig[I_Route::CUSTOM_MAP];
+        $this->callback = $callback;
+        php_sapi_name()=='cli' ?
+            $this->generateFromCli():
+            $this->generateFromHttp();
     }
 
-    private function generateFromHttp($routeConfig, I_CallBack $callback)
+    private function generateFromHttp()
     {
         $modes = array();
-        if ($routeConfig[self::MODE_AUTO] && $routeConfig[self::MODE_CUSTOM]) {
+        if ($this->routeConfig[self::MODE_AUTO] && $this->routeConfig[self::MODE_CUSTOM]) {
             $p1 = isset($routeConfig[self::PRI_MODE]) ? self::PRI_MODE : self::MODE_AUTO;
             $modes[] = $p1;
             if ($routeConfig[self::ATTEMPT_OTHER_MODE]) {
                 $modes[] = $p1===self::MODE_AUTO ? self::MODE_CUSTOM : self::MODE_AUTO;
             }
-        } elseif ($routeConfig[self::MODE_AUTO]) {
+        } elseif ($this->routeConfig[self::MODE_AUTO]) {
             $modes[] = self::MODE_AUTO;
-        } elseif ($routeConfig[self::MODE_CUSTOM]) {
+        } elseif ($this->routeConfig[self::MODE_CUSTOM]) {
             $modes[] = self::MODE_CUSTOM;
         }
 
         $requestUri = $_SERVER['REQUEST_URI'];
-        $result = false;
         foreach ($modes as $mode) {
-            $result = $mode===self::MODE_AUTO ?
-                $this->parseAutomatic($requestUri, $routeConfig[self::AUTO_TYPE], $callback) :
-                $this->parseCustom($requestUri, $routeConfig[self::CUSTOM_DETAIL], $callback);
-            if ($result) {
+            $mode===self::MODE_AUTO ?
+                $this->parseAutomatic($requestUri, $this->routeConfig[self::AUTO_TYPE]) :
+                $this->parseCustom($requestUri);
+            if ($this->callback->isValidate()) {
                 break;
             }
         }
-        return $result;
-
     }
 
-    private function generateFromCli($routeConfig)
+    private function generateFromCli()
     {
         ;
     }
 
-    private function parseAutomatic($requestUri, $mode, I_CallBack $callback)
+    private function parseAutomatic()
     {
         $result = false;
 
         return $result;
     }
 
-    private function parseCustom($requestUri, $rules, I_CallBack $callback)
+    private function parseCustom($requestUri)
     {
-        foreach ($rules as $rule => $data) {
+        foreach ($this->routeConfig[self::CUSTOM_DETAILS] as $rule => $data) {
             if (preg_match($rule, $requestUri, $match)) {
                 unset($match[0]);
-                $replaceAll = array_merge($match, $this->innerReplace);
+                $replaceAll = array_merge($match, $this->customMap);
                 if (is_array($data[self::CALLBACK])) {
                     $callable = array(
                         $this->parseReplace($data[self::CALLBACK][0], $replaceAll),
@@ -82,12 +91,10 @@ class Route implements I_Route
                 foreach ($data[self::ARGS] as $k=>$arg) {
                     $args[$k] = $this->parseReplace($arg, $match);
                 }
-                $callback->setCallable($callable);
-                $callback->setArgs($args);
-                return true;
+                $this->callback->setCallable($callable);
+                $this->callback->setArgs($args);
             }
         }
-        return false;
     }
 
     private function parseReplace($strSource, array $replaceAll)

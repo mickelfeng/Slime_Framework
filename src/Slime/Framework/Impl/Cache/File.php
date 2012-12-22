@@ -2,6 +2,8 @@
 namespace Slime\Framework\Impl;
 
 use Slime\Framework\Intf\Cache as I_Cache;
+use InvalidArgumentException;
+use RuntimeException;
 
 class Cache_File implements I_Cache
 {
@@ -89,5 +91,13 @@ class Cache_File implements I_Cache
     public function flush()
     {
         // TODO: Implement flush() method.
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDisabled()
+    {
+        // TODO: Implement isDisabled() method.
     }
 }

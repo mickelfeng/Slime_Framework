@@ -6,7 +6,7 @@ interface Route
     const MODE_AUTO = 1;
     const AUTO_TYPE = 2;
     const MODE_CUSTOM = 3;
-    const CUSTOM_DETAIL = 4;
+    const CUSTOM_DETAILS = 4;
     const CUSTOM_MAP = 5;
     const ATTEMPT_OTHER_MODE = 6;
     const PRI_MODE = 7;
@@ -14,10 +14,11 @@ interface Route
     const CALLBACK = 0;
     const ARGS = 1;
 
+
     /**
-     * @param $routeConfig
-     * @param CallBack $callback
-     * @return mixed
+     * @param array $routeConfig
+     * @param \Slime\Framework\Intf\CallBack $callback
+     * @return void
      */
-    public function generate($routeConfig, CallBack $callback);
+    public function generate(array $routeConfig, CallBack $callback);
 }
