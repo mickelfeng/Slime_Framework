@@ -14,9 +14,10 @@ interface CallBack
     public function getArgs();
 
     /**
-     * @return bool
+     * @param $isClassInstantiate bool
+     * @return mixed
      */
-    public function call();
+    public function call($isClassInstantiate = false);
 
     /**
      * @param mixed $callable

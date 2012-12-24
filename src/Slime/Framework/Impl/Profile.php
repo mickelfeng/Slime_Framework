@@ -40,4 +40,28 @@ class Profile implements I_Profile
     {
         // TODO: Implement isDisable() method.
     }
+
+    /**
+     * @return void
+     */
+    public function enable()
+    {
+        // TODO: Implement enable() method.
+    }
+
+    /**
+     * @return void
+     */
+    public function disable()
+    {
+        // TODO: Implement disable() method.
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDisabled()
+    {
+        // TODO: Implement isDisabled() method.
+    }
 }

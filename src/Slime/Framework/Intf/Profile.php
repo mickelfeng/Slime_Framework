@@ -1,7 +1,7 @@
 <?php
 namespace Slime\Framework\Intf;
 
-interface Profile
+interface Profile extends _Void
 {
     /**
      * @param string $label

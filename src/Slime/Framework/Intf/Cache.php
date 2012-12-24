@@ -1,22 +1,43 @@
 <?php
 namespace Slime\Framework\Intf;
 
-interface Cache
+interface Cache extends _Void
 {
-    public function get($key, $default = null);
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function get($key);
 
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @param int $expire
+     * @return bool
+     */
     public function set($key, $value, $expire);
 
-    public function getMulti($keys, $default = null);
+    /**
+     * @param array $keys
+     * @return array
+     */
+    public function getMulti($keys);
 
+    /**
+     * @param array $mapKeyValue
+     * @param int $expire
+     * @return bool
+     */
     public function setMulti(array $mapKeyValue, $expire);
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     public function delete($key);
-
-    public function flush();
 
     /**
      * @return bool
      */
-    public function isDisabled();
+    public function flush();
 }

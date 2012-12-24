@@ -1,7 +1,7 @@
 <?php
 namespace Slime\Framework\Intf;
 
-interface Log
+interface Log extends _Void
 {
     const LEVEL_DEBUG = 0;
     const LEVEL_NOTICE = 1;

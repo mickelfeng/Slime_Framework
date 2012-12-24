@@ -2,44 +2,85 @@
 namespace Slime\Framework\Impl;
 
 use Slime\Framework\Intf\Cache as I_Cache;
+use Memcached;
 
-class Cache_Memcached implements I_Cache
+class Cache_Memcached extends Cache_ implements I_Cache
 {
-    public function get($key, $default = null)
+    private $configs;
+
+    /** @var Memcached */
+    private $instance;
+
+    public function __construct(array $configs)
     {
-        // TODO: Implement get() method.
+        $this->configs = $configs;
     }
 
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function get($key)
+    {
+        return $this->getInstance()->get($key);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $value
+     * @param int    $expire
+     * @return bool
+     */
     public function set($key, $value, $expire)
     {
-        // TODO: Implement set() method.
+        return $this->getInstance()->set($key, $value, $expire);
     }
 
-    public function getMulti($keys, $default = null)
+    /**
+     * @param array $keys
+     * @return array
+     */
+    public function getMulti($keys)
     {
-        // TODO: Implement getMulti() method.
+        return $this->getInstance()->getMulti($keys);
     }
 
+    /**
+     * @param array $mapKeyValue
+     * @param int   $expire
+     * @return bool
+     */
     public function setMulti(array $mapKeyValue, $expire)
     {
-        // TODO: Implement setMulti() method.
+        return $this->getInstance()->setMulti($mapKeyValue, $expire);
     }
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     public function delete($key)
     {
-        // TODO: Implement delete() method.
-    }
-
-    public function flush()
-    {
-        // TODO: Implement flush() method.
+        return $this->getInstance()->delete($key);
     }
 
     /**
      * @return bool
      */
-    public function isDisabled()
+    public function flush()
     {
-        // TODO: Implement isDisabled() method.
+        return $this->getInstance()->flush();
+    }
+
+    /**
+     * @return \Memcached
+     */
+    private function getInstance()
+    {
+        if (!$this->instance) {
+            $this->instance = new Memcached();
+            $this->instance->addServers($this->configs['servers']);
+        }
+        return $this->instance;
     }
 }

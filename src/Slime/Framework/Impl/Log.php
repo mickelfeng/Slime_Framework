@@ -3,8 +3,6 @@ namespace Slime\Framework\Impl;
 
 use Slime\Framework\Intf\Log as I_Log;
 
-use RuntimeException;
-
 class Log implements I_Log
 {
     /**
@@ -25,7 +23,7 @@ class Log implements I_Log
     }
 
     /**
-     * @param int $logLevel
+     * @param int    $logLevel
      * @param string $logDetail
      * @return void
      */
@@ -35,12 +33,28 @@ class Log implements I_Log
     }
 
     /**
-     * @param $file
+     * @param       $file
      * @param mixed $format
      * @return mixed
      */
     public function flush($file, $format = null)
     {
         // TODO: Implement flush() method.
+    }
+
+    /**
+     * @return void
+     */
+    public function enable()
+    {
+        // TODO: Implement enable() method.
+    }
+
+    /**
+     * @return void
+     */
+    public function disable()
+    {
+        // TODO: Implement disable() method.
     }
 }

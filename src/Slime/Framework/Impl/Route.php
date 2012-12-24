@@ -3,7 +3,6 @@ namespace Slime\Framework\Impl;
 
 use Slime\Framework\Intf\CallBack as I_CallBack;
 use Slime\Framework\Intf\Route as I_Route;
-use Slime\Framework\Intf\Cache as I_Cache;
 
 class Route implements I_Route
 {

@@ -12,14 +12,17 @@ class CallBack implements I_CallBack
     private $args = array();
 
     /**
+     * @param $isClassInstantiate bool
      * @return mixed
      */
-    public function call()
+    public function call($isClassInstantiate = false)
     {
         if (!$this->callable) {
             return false;
         }
-        return call_user_func_array($this->callable, $this->args);
+        return $isClassInstantiate ?
+            call_user_func_array(new $this->callable, $this->args):
+            call_user_func_array($this->callable, $this->args);
     }
 
     /**

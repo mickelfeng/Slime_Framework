@@ -2,95 +2,79 @@
 namespace Slime\Framework\Impl;
 
 use Slime\Framework\Intf\Cache as I_Cache;
-use InvalidArgumentException;
-use RuntimeException;
 
 class Cache_File implements I_Cache
 {
-    private $dir;
-    private $file;
-
-    private $data;
-
-    public function __construct(array $config)
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function get($key)
     {
-        if (!isset($config['file']) || !isset($config['file'])) {
-            throw new InvalidArgumentException('config must has dir&&file fields');
-        }
-        $this->dir = $config['dir'];
-        $this->file = $this->dir . DIRECTORY_SEPARATOR . $config['file'];
-        unset($config);
-        if (!file_exists($this->dir)) {
-            if (!mkdir($this->dir, 0777, true)) {
-                throw new RuntimeException(sprintf('cache dir [%s] can not be create', $this->dir));
-            }
-        }
-        if (!is_writable($this->dir)) {
-            throw new RuntimeException(sprintf('cache dir [%s] can not be write', $this->dir));
-        }
-        if (!file_exists($this->file)) {
-            $fp = fopen($this->file, 'w');
-            if (flock($fp, LOCK_EX || LOCK_NB)) {
-                if (!is_writeable($this->file)) {
-                    flock($fp, LOCK_NB);
-                    throw new RuntimeException(sprintf('file [%s] can not be write', $this->file));
-                }
-                fwrite($fp, 'return array();');
-                flock($fp, LOCK_UN);
-            }
-        }
+        // TODO: Implement get() method.
     }
 
-    public function get($key, $default = null)
-    {
-        $data = require $this->file;
-
-        $expire = $data[$key]['expire'];
-        if ($expire>0 && $expire>time()) {
-            $result = $default;
-            $this->delete($key);
-        } else {
-            $result = isset($data[$key]) ? $data[$key] : $default;
-        }
-        return $result;
-    }
-
+    /**
+     * @param string $key
+     * @param mixed  $value
+     * @param int    $expire
+     * @return bool
+     */
     public function set($key, $value, $expire)
     {
-        $expire = $expire <= 0 ? 0 : time()+$expire;
-        $fp = fopen($this->file, 'r+');
-        if (flock($fp, LOCK_EX)) {
-            $data = require $this->file;
-            $data[$key] = array('value' => $value, 'expire' => $expire);
-            $str = '<?php return ' . var_export($data) . ';';
-            fwrite($fp, $str);
-        }
+        // TODO: Implement set() method.
     }
 
-    public function getMulti($key, $default = null)
+    /**
+     * @param array $keys
+     * @return array
+     */
+    public function getMulti($keys)
     {
         // TODO: Implement getMulti() method.
     }
 
+    /**
+     * @param array $mapKeyValue
+     * @param int   $expire
+     * @return bool
+     */
     public function setMulti(array $mapKeyValue, $expire)
     {
         // TODO: Implement setMulti() method.
     }
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     public function delete($key)
     {
-        $fp = fopen($this->file, 'r+');
-        if (flock($fp, LOCK_EX)) {
-            $data = require $this->file;
-            unset($data[$key]);
-            $str = '<?php return ' . var_export($data) . ';';
-            fwrite($fp, $str);
-        }
+        // TODO: Implement delete() method.
     }
 
+    /**
+     * @return bool
+     */
     public function flush()
     {
         // TODO: Implement flush() method.
+    }
+
+    /**
+     * @return void
+     */
+    public function enable()
+    {
+        // TODO: Implement enable() method.
+    }
+
+    /**
+     * @return void
+     */
+    public function disable()
+    {
+        // TODO: Implement disable() method.
     }
 
     /**
