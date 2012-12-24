@@ -7,11 +7,24 @@ Interface Event
     CONST PRE_APP  = 'pre_app';
     CONST POST_APP = 'post_app';
 
+    /**
+     * @param string $name
+     * @return mixed
+     */
     public function occur($name);
 
-    public function add($name, CallBack $callback);
+    /**
+     * @param string $name
+     * @param \Slime\Framework\Intf\CallBack $callback
+     * @return void
+     */
+    public function set($name, CallBack $callback);
 
-    public function addMulti($mapNameCallback);
+    /**
+     * @param CallBack[] $mapNameCallback
+     * @return void
+     */
+    public function setMulti($mapNameCallback);
 
     public function delete($name);
 }

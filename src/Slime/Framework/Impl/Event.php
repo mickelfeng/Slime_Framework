@@ -10,7 +10,7 @@ class Event implements I_Event
     private $events = array();
 
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      */
     public function occur($name)
@@ -22,18 +22,31 @@ class Event implements I_Event
         }
     }
 
-    public function add($name, I_CallBack $callback)
+    /**
+     * @param $name
+     * @param \Slime\Framework\Intf\CallBack $callback
+     * @return void
+     */
+    public function set($name, I_CallBack $callback)
     {
-        // TODO: Implement add() method.
+        $this->events[$name] = $callback;
     }
 
-    public function addMulti($mapNameCallback)
+    /**
+     * @param CallBack[] $mapNameCallback
+     * @return void
+     */
+    public function setMulti($mapNameCallback)
     {
-        // TODO: Implement addMulti() method.
+        foreach ($mapNameCallback as $name => $callback) {
+            $this->events[$name] = $callback;
+        }
     }
 
     public function delete($name)
     {
-        // TODO: Implement delete() method.
+        if (isset($this->events[$name])) {
+            unset($this->events[$name]);
+        }
     }
 }

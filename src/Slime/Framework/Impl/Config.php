@@ -2,6 +2,7 @@
 namespace Slime\Framework\Impl;
 
 use Slime\Framework\Intf\Config as I_Config;
+use RuntimeException;
 
 class Config implements I_Config
 {
@@ -9,9 +10,13 @@ class Config implements I_Config
 
     protected $configs = array();
 
-    public function __construct($configDir)
+    public function __construct()
     {
-        $this->dir = $configDir;
+        if (defined('DIR_CONFIG')) {
+            $this->dir = DIR_CONFIG;
+        } else {
+            throw new RuntimeException('const DIR_CONFIG must be declare first');
+        }
     }
 
     /**
