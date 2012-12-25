@@ -3,6 +3,9 @@ namespace Slime\Framework\Intf;
 
 interface Profile extends _Void
 {
+    const TYPE_DATA = 1;
+    const TYPE_HTML = 2;
+
     /**
      * @param string $label
      * @param string $group
@@ -12,18 +15,17 @@ interface Profile extends _Void
 
     /**
      * @param $tick
+     * @throws \InvalidArgumentException
      * @return void
      */
     public function stop($tick);
 
     /**
-     * @param mixed $type
-     * @return mixed
+     * @param int $min
+     * @param int $max
+     * @param null|View $view
+     * @param null|string $tpl
+     * @return string|array
      */
-    public function result($type = null);
-
-    /**
-     * @return bool
-     */
-    public function isDisable();
+    public function result($min = 0, $max = 0, $view = null, $tpl = null);
 }

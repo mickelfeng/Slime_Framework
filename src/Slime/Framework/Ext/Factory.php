@@ -5,7 +5,7 @@
  * @method static \Slime\Framework\Intf\RDB RDB(\string $className, \mixed $arg1) multi arg
  * @method static \Slime\Framework\Intf\CallBack callback()
  */
-class F
+class Factory
 {
     /**
      * @var \ReflectionClass[]

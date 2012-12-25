@@ -7,7 +7,7 @@ use Slime\Framework\Intf\Event as I_Event;
 class Event implements I_Event
 {
     /** @var I_CallBack[] */
-    private $events = array();
+    protected $events = array();
 
     /**
      * @param string $name

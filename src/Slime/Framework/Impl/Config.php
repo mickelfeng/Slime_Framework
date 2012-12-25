@@ -17,6 +17,14 @@ class Config implements I_Config
         } else {
             throw new RuntimeException('const DIR_CONFIG must be declare first');
         }
+
+        if ($handle = opendir('C:\\Inetpub\\wwwroot\\test\\')) {
+            echo "Files:\n";
+            while (false !== ($file = readdir($handle))){
+                echo "$file\n";
+            }
+            closedir($handle);
+        }
     }
 
     /**

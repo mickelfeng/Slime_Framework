@@ -1,4 +1,8 @@
 <?php
+namespace Game4PHP;
+
+use Singleton;
+
 /**
  * @method static \Slime\Framework\Intf\App App()
  * @method static \Slime\Framework\Intf\Config Config()
@@ -6,13 +10,11 @@
  * @method static \Slime\Framework\Intf\Route Route()
  * @method static \Slime\Framework\Intf\CallBack CallBack()
  */
-class S
+class Lib_AppPool extends Singleton
 {
     protected static $instances = array();
 
-    public static $mapCallNamespace = array(
-        'App,Config,Event,Route,CallBack' => '\\Slime\\Framework\\Impl\\',
-    );
+    protected static $mapCallNamespace = array();
 
     public static function __callStatic($name)
     {
