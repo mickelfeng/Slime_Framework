@@ -10,13 +10,6 @@ class App implements I_App
     /**
      * @return void
      */
-    public function pre()
-    {
-    }
-
-    /**
-     * @return void
-     */
     public function run()
     {
         $E   = Singleton::Event();
@@ -38,13 +31,5 @@ class App implements I_App
         }
 
         $E->occur(Event::POST_APP);
-    }
-
-    /**
-     * @return void
-     */
-    public function post()
-    {
-        // TODO: Implement post() method.
     }
 }

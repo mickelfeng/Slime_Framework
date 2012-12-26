@@ -1,7 +1,7 @@
 <?php
 namespace Game4PHP\BLL;
 
-class BLL_Index
+class Index
 {
     public static function get()
     {

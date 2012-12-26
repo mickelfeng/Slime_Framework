@@ -1,4 +1,11 @@
 <?php
+/**
+ * @method static \Slime\Framework\Intf\App App()
+ * @method static \Slime\Framework\Intf\Config Config()
+ * @method static \Slime\Framework\Intf\Event Event()
+ * @method static \Slime\Framework\Intf\Route Route()
+ * @method static \Slime\Framework\Intf\CallBack CallBack()
+ */
 class Singleton
 {
     protected static $instances = array();
