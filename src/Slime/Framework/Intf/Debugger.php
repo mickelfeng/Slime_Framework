@@ -28,12 +28,6 @@ interface Debugger
     public function error($message);
 
     /**
-     * @param int $level
-     * @return mixed
-     */
-    public function result($level = 0);
-
-    /**
      * @param string $label
      * @param string $group
      * @return string
@@ -41,9 +35,15 @@ interface Debugger
     public function start($label, $group = 'Default');
 
     /**
-     * @param $tick
+     * @param string $tick
      * @throws \InvalidArgumentException
      * @return void
      */
     public function stop($tick);
+
+    /**
+     * @param int $format
+     * @return mixed
+     */
+    public function result($format = 0);
 }
