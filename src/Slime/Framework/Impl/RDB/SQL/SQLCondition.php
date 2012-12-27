@@ -4,16 +4,21 @@ namespace Slime\Framework\Impl;
 class SqlCondition implements \Slime\Framework\Intf\SqlCondition
 {
     protected $data;
+    protected $logic = 'AND';
 
     /**
-     * @param string $k key
-     * @param mixed $v string:value; array:in() ignore equ
-     * @param mixed $equ string:k equ v; if false:k v
+     * @param string $k
+     * @param string|int|array $v string|int : value; array : in() ignore equ
+     * @param string|bool $equ string:k equ v; false:k v
      * @return $this
      */
     public function set($k, $v, $equ = '=')
     {
-        // TODO: Implement set() method.
+        $this->data[] = $k . (
+            is_array($v) ?
+                ' IN (' . implode(',', $v) . ')' :
+                ($equ===false ? $v : $equ . $v)
+        );
     }
 
     /**
@@ -22,7 +27,7 @@ class SqlCondition implements \Slime\Framework\Intf\SqlCondition
      */
     public function setSub(\Slime\Framework\Intf\SqlCondition $sqlCondition)
     {
-        // TODO: Implement setSub() method.
+        $this->data[] = $sqlCondition->generate();
     }
 
     /**
@@ -31,7 +36,7 @@ class SqlCondition implements \Slime\Framework\Intf\SqlCondition
      */
     public function setLogic($logic = 'AND')
     {
-        // TODO: Implement setLogic() method.
+        $this->logic = $logic;
     }
 
     /**
@@ -39,5 +44,7 @@ class SqlCondition implements \Slime\Framework\Intf\SqlCondition
      */
     public function generate()
     {
+        $string = empty($this->data) ? '1' : implode(") {$this->logic} (", $this->data);
+        return '(' . $string . ')';
     }
 }
