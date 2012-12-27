@@ -6,28 +6,33 @@ use Slime\Framework\Intf\Route as I_Route;
 
 class Route implements I_Route
 {
-    private $customMap = array();
+    protected $customMap = array();
 
     /**
      * @var array
      */
-    private $routeConfig;
+    protected $routeConfig;
 
     /**
      * @var I_CallBack
      */
-    private $callback;
-
+    protected $callback;
 
     /**
      * @param array $routeConfig
+     */
+    public function __construct(array $routeConfig)
+    {
+        $this->routeConfig = $routeConfig;
+    }
+
+    /**
      * @param \Slime\Framework\Intf\CallBack $callback
      * @return void
      */
-    public function generate(array $routeConfig, I_CallBack $callback)
+    public function generate(I_CallBack $callback)
     {
-        $this->routeConfig = $routeConfig;
-        $this->customMap = $routeConfig[I_Route::CUSTOM_MAP];
+        $this->customMap = $this->routeConfig[I_Route::CUSTOM_MAP];
         $this->callback = $callback;
         php_sapi_name()=='cli' ?
             $this->generateFromCli():

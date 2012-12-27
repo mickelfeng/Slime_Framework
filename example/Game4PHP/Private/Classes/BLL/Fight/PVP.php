@@ -1,5 +1,5 @@
 <?php
-namespace Game4PHP\BLL;
+namespace Game4PHP;
 
 class BLL_Fight_PVP
 {

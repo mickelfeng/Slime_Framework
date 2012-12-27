@@ -3,9 +3,11 @@ namespace Slime\Framework\Intf;
 
 Interface Event
 {
-    CONST PRE_SYS  = 'pre_system';
+    CONST PRE_SYSTEM  = 'pre_system';
     CONST PRE_APP  = 'pre_app';
+    CONST PRE_BLL  = 'pre_bll';
     CONST POST_APP = 'post_app';
+    CONST POST_SYSTEM = 'post_system';
 
     /**
      * @param string $name

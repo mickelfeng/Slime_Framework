@@ -11,10 +11,10 @@ class I18n implements I_I18n
 
     protected $_storage = array();
 
-    public function __construct($_lang)
+    public function __construct($_langDefault = null)
     {
-        #$this->loadLangPacket($_lang);
-        #$this->setDefaultLang($_lang);
+        $this->loadLangPacket($_langDefault);
+        $this->setDefaultLang($_langDefault);
     }
 
     public function setLangDir($path)

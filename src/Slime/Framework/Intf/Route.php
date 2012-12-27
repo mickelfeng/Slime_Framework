@@ -14,11 +14,9 @@ interface Route
     const CALLBACK = 0;
     const ARGS = 1;
 
-
     /**
-     * @param array $routeConfig
      * @param \Slime\Framework\Intf\CallBack $callback
      * @return void
      */
-    public function generate(array $routeConfig, CallBack $callback);
+    public function generate(CallBack $callback);
 }

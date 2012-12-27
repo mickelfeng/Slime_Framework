@@ -3,7 +3,6 @@
  * @method static \Slime\Framework\Intf\Cache Cache(\string $className, \mixed $arg1) multi arg
  * @method static \Slime\Framework\Intf\NoRDB NoRDB(\string $className, \mixed $arg1) multi arg
  * @method static \Slime\Framework\Intf\RDB RDB(\string $className, \mixed $arg1) multi arg
- * @method static \Slime\Framework\Intf\CallBack callback()
  */
 class Factory
 {
