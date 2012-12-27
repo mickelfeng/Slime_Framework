@@ -6,7 +6,7 @@ class RDB_SQL_MySQL implements \Slime\Framework\Intf\SQL
     protected $select = '*';
     protected $table;
     protected $groupBy = '';
-    protected $where = '(1)';
+    protected $where = '1';
     protected $limit = '';
     protected $orderBy = '';
 
@@ -103,7 +103,7 @@ class RDB_SQL_MySQL implements \Slime\Framework\Intf\SQL
     public function generate($asTmp = '')
     {
         return sprintf(
-            "SELECT %s FROM %s WHERE %s %s %s %s",
+            "SELECT %s FROM %s WHERE (%s) %s %s %s",
             $this->select, $this->table, $this->where, $this->groupBy, $this->limit, $this->orderBy
         );
     }
