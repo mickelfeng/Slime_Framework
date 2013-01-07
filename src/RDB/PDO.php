@@ -19,7 +19,7 @@ class PDO
 
     /**
      * @param array $configs
-     * @param \Slime\Framework\I_Event|null $Debugger
+     * @param \Slime\Framework\I_Event|null $Event
      */
     public function __construct(array $configs = array(), $Event = null)
     {
